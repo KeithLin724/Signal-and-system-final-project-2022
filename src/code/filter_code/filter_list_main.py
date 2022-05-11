@@ -1,5 +1,5 @@
 import os
-from custom_filter import EcgFileFilter
+from custom_filter_class import EcgFileFilter
 from pandas import DataFrame as df
 
 folderTree = ['CW', 'HT']
@@ -13,9 +13,10 @@ for nameFolder in folderTree:
     try:
         lsDir = os.listdir(name)
         folderFilter = EcgFileFilter(nameFolder)
+
         for i in lsDir:
             folderFilter.add(i)
-        # folderFilter.formatPrint()
+
         folderFileName.update({nameFolder: folderFilter})
 
     except Exception as e:

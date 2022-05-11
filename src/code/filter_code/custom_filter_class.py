@@ -6,6 +6,7 @@ import os
 class EcgFileFilter:
     def __init__(self, name: str) -> None:
         self.name = name
+
         STATIC_DIC = {'baseline': [],
                       'stage1': [],
                       'stage2': [],
@@ -18,6 +19,7 @@ class EcgFileFilter:
                           'SV': deepcopy(STATIC_DIC)}
 
     def add(self, fileName: str):
+        'add file path in data structs function'
         tmpFileName = fileName
         fileSplit = fileName.replace('.csv', '').split('_')
         if fileSplit[0] == self.name:
@@ -38,10 +40,12 @@ class EcgFileFilter:
         return str(self.filterDic)
 
     def formatPrint(self) -> None:
+        'using rich print the dic'
         print(self.name)
         print(self.filterDic)
 
     def outToFile(self, folderSave: str) -> None:
+        'output to file function'
         if os.path.exists(folderSave) == False:  # for input
             os.mkdir(folderSave)
 
