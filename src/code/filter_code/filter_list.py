@@ -1,4 +1,3 @@
-from rich import print as rprint
 import os
 from custom_filter import EcgFileFilter
 from pandas import DataFrame as df

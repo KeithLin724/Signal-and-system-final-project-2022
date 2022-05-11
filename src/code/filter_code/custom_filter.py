@@ -42,16 +42,24 @@ class EcgFileFilter:
         print(self.filterDic)
 
     def outToFile(self, folderSave: str) -> None:
+        if os.path.exists(folderSave) == False:  # for input
+            os.mkdir(folderSave)
+
+        folderSave = os.path.join(folderSave, self.name)  # add name
+
         if os.path.exists(folderSave) == False:
             os.mkdir(folderSave)
-        folderSave = os.path.join(folderSave, self.name)
-        os.mkdir(folderSave)
+
         PATHTYPE = ['simple', 'absolute']
         simPath, absPath = os.path.join(
             folderSave, PATHTYPE[0]), os.path.join(folderSave, PATHTYPE[1])
 
-        os.mkdir(simPath)
-        os.mkdir(absPath)
+        if os.path.exists(simPath) == False:
+            os.mkdir(simPath)
+
+        if os.path.exists(absPath) == False:
+            os.mkdir(absPath)
+
         for typeKey, stateValue in self.filterDic.items():
             fileNameTmp = typeKey+'.txt'
             with open(file=os.path.join(simPath, fileNameTmp), mode='w') as simFile, \
