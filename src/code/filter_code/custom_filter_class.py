@@ -18,21 +18,21 @@ class EcgFileFilter:
                           'index': deepcopy(STATIC_DIC),
                           'SV': deepcopy(STATIC_DIC)}
 
-    def add(self, fileName: str):
+    def add(self, fileSimPath: str):
         'add file path in data structs function'
-        tmpFileName = fileName
+        tmpSimPath = fileSimPath
+
+        tmpSimPathList = os.path.split(fileSimPath)
+        fileName = tmpSimPathList[-1]
         fileSplit = fileName.replace('.csv', '').split('_')
         if fileSplit[0] == self.name:
             if fileSplit[2] in self.filterDic:
                 if fileSplit[1] in self.filterDic[fileSplit[2]]:
-
-                    self.filterDic[fileSplit[2]
-                                   ][fileSplit[1]].append(tmpFileName)
-                    self.filterDic[fileSplit[2]][fileSplit[1]].append(
-                        os.path.abspath(tmpFileName))
+                    self.filterDic[fileSplit[2]][fileSplit[1]] = [
+                        fileName, tmpSimPath, os.path.abspath(tmpSimPath)]
                 else:
                     self.filterDic[fileSplit[2]].update(
-                        {fileSplit[1]: [tmpFileName, os.path.abspath(tmpFileName)]})
+                        {fileSplit[1]: [fileName, tmpSimPath, os.path.abspath(tmpSimPath)]})
 
         # print(fileSplit)
 
@@ -54,9 +54,13 @@ class EcgFileFilter:
         if os.path.exists(folderSave) == False:
             os.mkdir(folderSave)
 
-        PATHTYPE = ['simple', 'absolute']
-        simPath, absPath = os.path.join(
-            folderSave, PATHTYPE[0]), os.path.join(folderSave, PATHTYPE[1])
+        PATHTYPE = ['file_Name', 'simple', 'absolute']
+        filePath, simPath, absPath = os.path.join(folderSave, PATHTYPE[0]),\
+            os.path.join(folderSave, PATHTYPE[1]),\
+            os.path.join(folderSave, PATHTYPE[2])
+
+        if os.path.exists(filePath) == False:
+            os.mkdir(filePath)
 
         if os.path.exists(simPath) == False:
             os.mkdir(simPath)
@@ -66,11 +70,13 @@ class EcgFileFilter:
 
         for typeKey, stateValue in self.filterDic.items():
             fileNameTmp = typeKey+'.txt'
-            with open(file=os.path.join(simPath, fileNameTmp), mode='w') as simFile, \
+            with open(file=os.path.join(filePath, fileNameTmp), mode='w') as fileFile,\
+                open(file=os.path.join(simPath, fileNameTmp), mode='w') as simFile, \
                     open(file=os.path.join(absPath, fileNameTmp), mode='w') as absFile:
-                for _, filePath in stateValue.items():
-                    simFile.write(filePath[0]+'\n')
-                    absFile.write(filePath[1]+'\n')
+                for _, filePathPart in stateValue.items():
+                    fileFile.write(filePathPart[0]+'\n')
+                    simFile.write(filePathPart[1]+'\n')
+                    absFile.write(filePathPart[2]+'\n')
 
 
 #a = EcgFileFilter('Hello world')

@@ -1,4 +1,4 @@
-from rich import print as rprint
+from pprint import pprint
 import os
 
 folderTree = ['CW', 'HT']
@@ -16,7 +16,7 @@ for nameFolder in folderTree:
         print(e)
         exit()
 
-rprint(folderFileName)
+pprint(folderFileName)
 
 # make a folder name
 absFolderPath = os.path.join(os.path.abspath('src'), 'name of folder')
@@ -46,7 +46,7 @@ for nameFolder in folderTree:
         '''
         for name in directories:
             print(os.path.join(root, name))'''
-rprint(listSaveAbsPath)
+pprint(listSaveAbsPath)
 for key, listOfFilePath in listSaveAbsPath.items():
 
     fileNameTmp = os.path.join(PathOfFolderPath, ''.join(

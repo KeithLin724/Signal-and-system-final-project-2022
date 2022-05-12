@@ -15,7 +15,7 @@ for nameFolder in folderTree:
         folderFilter = EcgFileFilter(nameFolder)
 
         for i in lsDir:
-            folderFilter.add(i)
+            folderFilter.add(os.path.join(dataFolder, nameFolder, i))
 
         folderFileName.update({nameFolder: folderFilter})
 
