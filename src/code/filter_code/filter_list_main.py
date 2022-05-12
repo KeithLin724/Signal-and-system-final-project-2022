@@ -25,4 +25,4 @@ for nameFolder in folderTree:
 
 for key, val in folderFileName.items():
     val.formatPrint()
-    val.outToFile('FilterOutput')
+    val.outToFile('src\FilterOutput')
