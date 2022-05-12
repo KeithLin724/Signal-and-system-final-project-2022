@@ -43,9 +43,6 @@ for nameFolder in folderTree:
         tmp = [os.path.join(root, name) for name in files]
         listSaveAbsPath.update({nameFolder: tmp})
 
-        '''
-        for name in directories:
-            print(os.path.join(root, name))'''
 pprint(listSaveAbsPath)
 for key, listOfFilePath in listSaveAbsPath.items():
 
