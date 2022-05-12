@@ -18,8 +18,12 @@ for nameFolder in folderTree:
 
 pprint(folderFileName)
 
+tmpSaveFolder = os.path.join(os.path.abspath('src'), 'FileTxt')
+if os.path.exists(tmpSaveFolder) == False:
+    os.mkdir(tmpSaveFolder)
+
 # make a folder name
-absFolderPath = os.path.join(os.path.abspath('src'), 'name of folder')
+absFolderPath = os.path.join(tmpSaveFolder, 'name of folder')
 if os.path.exists(absFolderPath) == False:
     os.mkdir(absFolderPath)
 
@@ -32,7 +36,7 @@ for key, listOfFileName in folderFileName.items():
             f.write(i+'\n')
 
 # make a abs file path in file
-PathOfFolderPath = os.path.join(os.path.abspath('src'), 'name absfolder')
+PathOfFolderPath = os.path.join(tmpSaveFolder, 'name absfolder')
 if os.path.exists(PathOfFolderPath) == False:
     os.mkdir(PathOfFolderPath)
 
