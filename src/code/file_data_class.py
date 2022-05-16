@@ -27,12 +27,11 @@ class FileDataClass:
         return (self.__fileName, self.__fromFolder)
 
 
-# test
-a = FileDataClass(
-    'src\data\CW\CW_baseline_SV.csv')
+# DEBUG: test
+# a = FileDataClass('src\data\CW\CW_baseline_SV.csv')
 
-tmp = a.get_file_data()
+# tmp = a.get_file_data()
 
-pprint(tmp)
+# pprint(tmp)
 
-print(os.path.exists('src\data\CW\CW_baseline_SV.csv'))
+# print(os.path.exists('src\data\CW\CW_baseline_SV.csv'))
