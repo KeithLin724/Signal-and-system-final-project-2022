@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 from pprint import pprint
+import matplotlib.pyplot as plt
 
 
 class FileDataClass:
@@ -17,7 +18,10 @@ class FileDataClass:
         tmpHeader[1:] = self.__fileData
         self.__fileData = pd.Series(tmpHeader)
 
-        tmpNameList = self.__fileName.replace('.csv', '').split('_')
+        tmpNameList = self.__fileName.replace('.csv', '')
+        self.__fileData.name = tmpNameList.replace('_', ' ')
+        tmpNameList = tmpNameList.split('_')
+
         self.__name = tmpNameList[0]
         self.__state = tmpNameList[1]
         self.__dataType = tmpNameList[2]
@@ -30,6 +34,16 @@ class FileDataClass:
 
     def get_file_path(self) -> tuple:
         return (self.__fileName, self.__fromFolder)
+
+    def save_to_png(self, folderPath: str, dpi: int = 100) -> None:
+        plt.clf()
+        self.__fileData.plot(legend=True, label=self.__fileData.name)
+        saveFileName = self.__fileData.name.replace(' ', '_') + '.png'
+        saveFilePath = os.path.join(folderPath, saveFileName)
+        plt.savefig(saveFilePath, dpi=dpi)
+
+        plt.clf()
+        plt.close()
 
 
 # DEBUG: test
