@@ -10,7 +10,12 @@ class FileDataClass:
 
         self.__fileData = pd.read_csv(path,
                                       index_col=False,
-                                      squeeze=True)
+                                      squeeze=True,
+                                      header=0)
+        tmpHeader = [float(self.__fileData.name)]
+
+        tmpHeader[1:] = self.__fileData
+        self.__fileData = pd.Series(tmpHeader)
 
         tmpNameList = self.__fileName.replace('.csv', '').split('_')
         self.__name = tmpNameList[0]
