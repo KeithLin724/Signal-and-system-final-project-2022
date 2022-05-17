@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-from pprint import pprint
 import matplotlib.pyplot as plt
 
 
@@ -11,8 +10,10 @@ class FileDataClass:
 
         self.__fileData = pd.read_csv(path,
                                       index_col=False,
-                                      squeeze=True,
-                                      header=0)
+                                      # squeeze=True,
+                                      header=0).squeeze('columns')
+        # print(self.__fileData)
+
         tmpHeader = [float(self.__fileData.name)]
 
         tmpHeader[1:] = self.__fileData
@@ -37,6 +38,7 @@ class FileDataClass:
 
     def save_to_png(self, folderPath: str, dpi: int = 100) -> None:
         plt.clf()
+
         self.__fileData.plot(legend=True, label=self.__fileData.name)
         saveFileName = self.__fileData.name.replace(' ', '_') + '.png'
         saveFilePath = os.path.join(folderPath, saveFileName)
@@ -44,6 +46,9 @@ class FileDataClass:
 
         plt.clf()
         plt.close()
+
+    def __repr__(self) -> str:
+        return f'FileDataClass Name :{self.__name}, DataType :{self.__dataType}, State :{self.__state}'
 
 
 # DEBUG: test

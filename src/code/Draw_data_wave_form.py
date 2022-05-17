@@ -1,5 +1,7 @@
 
 
+from copy import deepcopy
+
 from file_data_class import FileDataClass  # import the File Date
 import matplotlib.pyplot as plt  # about plot the graph
 import os  # read file in lib
@@ -8,45 +10,60 @@ import pandas as pd
 
 
 pathLoc = 'src\FilterOutput'
-name = ['CW']
+names = ['CW', 'HT']
 filePathType = 'simple'
-# test cw
-hrPathList = []
-indexPathList = []
-svPathList = []
 
-locCheck = os.path.join(pathLoc, name[0], filePathType)
-listOfFileName = None
-if os.path.isdir(locCheck):
-    listOfFileName = os.listdir(locCheck)
-    pprint(listOfFileName)
-testCheck = os.path.join(locCheck, listOfFileName[2])
+dataPathClass = dict()
+emptyList = [[], [], []]
+locCheckDict = dict()
+for name in names:
+    locCheck = os.path.join(pathLoc, name, filePathType)
+    listOfFileName = None
 
-dataPath = []
-with open(file=testCheck, mode='r') as f:
-    dataPath = f.readlines()
+    if os.path.isdir(locCheck):
+        listOfFileName = os.listdir(locCheck)
+        listOfName = [i.replace('.txt', '') for i in listOfFileName]
+        dicZipList = dict(zip(listOfName, deepcopy(emptyList)))
+        # pprint(listOfName)
+        # pprint(dicZipList)
+        dataPathClass.update({name: dicZipList})
 
-dataPath = [i.replace('\n', '') for i in dataPath]
+        locCheckDict.update(
+            {name: [os.path.join(locCheck, i) for i in listOfFileName]})
 
-pprint(dataPath)
 
-fileDate = FileDataClass(dataPath[0])
+pprint(dataPathClass)
+pprint(locCheckDict)
 
-#fileDate = FileDataClass(testCheck)
-thing = fileDate.get_file_data()
-thingName = fileDate.get_file_path()
-pprint(thingName)
-'''
-b = [int(thing.name)]
-b[1:] = thing
-thing = pd.Series(b)
-'''
-# list(thing.values)
-pprint(thing)
-fileDate.save_to_png(folderPath='tmp')
-#thing.plot(legend=True,  label=thing.name)
-#saveFileName = thing.name.replace(' ', '_')
-#saveFileName = f'tmp\{saveFileName}.png'
-# pprint(f'tmp\{saveFileName}.png')
-# plt.savefig(saveFileName)
-# plt.show()
+for nameC, filePaths in locCheckDict.items():
+    for filePath in filePaths:
+        simplePath = []
+        with open(filePath, mode='r') as f:
+            simplePath = [i.replace('\n', '') for i in list(f.readlines())]
+            # pprint(simplePath)
+        objList = [FileDataClass(i) for i in simplePath]
+        for i in objList:
+            name, _, typeName = i.get_file_type_deatil()
+            print(name, _, typeName)
+            dataPathClass[name][typeName].append(i)
+
+
+saveFolderName = os.path.join('src', 'file Picture')
+if os.path.exists(saveFolderName) == False:
+    os.mkdir(saveFolderName)
+
+for namePart, dataDict in dataPathClass.items():
+
+    outSaveFolderName = os.path.join(saveFolderName, namePart)
+
+    if os.path.exists(outSaveFolderName) == False:
+        os.mkdir(outSaveFolderName)
+
+    for typeName, objFile in dataDict.items():
+        insideSaveFolderName = os.path.join(outSaveFolderName, typeName)
+
+        if os.path.exists(insideSaveFolderName) == False:
+            os.mkdir(insideSaveFolderName)
+
+        for i in objFile:
+            i.save_to_png(folderPath=insideSaveFolderName)
