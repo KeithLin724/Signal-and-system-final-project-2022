@@ -1,22 +1,19 @@
-# import matplotlib.pyplot as plt  # about plot the graph
+
 import ctypes
 import os  # read file in lib
 from pprint import pprint
-#import pandas as pd
 from copy import deepcopy
 # write by my self
 from file_data_class import FileDataClass  # import the File Date
 
 
-def get_ppi():
+def get_ppi():  # get the dpi
     LOGPIXELSX = 88
     LOGPIXELSY = 90
     user32 = ctypes.windll.user32
     user32.SetProcessDPIAware()
     dc = user32.GetDC(0)
     pix_per_inch = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
-    #print("Horizontal DPI is", windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX))
-    #print("Vertical DPI is", windll.gdi32.GetDeviceCaps(dc, LOGPIXELSY))
     user32.ReleaseDC(0, dc)
     return pix_per_inch
 
@@ -38,8 +35,7 @@ for name in names:
         listOfFileName = os.listdir(locCheck)
         listOfName = [i.replace('.txt', '') for i in listOfFileName]
         dicZipList = dict(zip(listOfName, deepcopy(emptyList)))
-        # pprint(listOfName)
-        # pprint(dicZipList)
+
         dataPathClass.update({name: dicZipList})
 
         locCheckDict.update(
@@ -54,18 +50,19 @@ for nameC, filePaths in locCheckDict.items():
         simplePath = []
         with open(filePath, mode='r') as f:
             simplePath = [i.replace('\n', '') for i in list(f.readlines())]
-            # pprint(simplePath)
+
         objList = [FileDataClass(i) for i in simplePath]
         for i in objList:
             name, _, typeName = i.get_file_type_deatil()
             print(name, _, typeName)
             dataPathClass[name][typeName].append(i)
 
-
+# save the png
+# make the path
 saveFolderName = os.path.join('src', 'file Picture')
 if os.path.exists(saveFolderName) == False:
     os.mkdir(saveFolderName)
-
+# open the dict
 for namePart, dataDict in dataPathClass.items():
 
     outSaveFolderName = os.path.join(saveFolderName, namePart)
