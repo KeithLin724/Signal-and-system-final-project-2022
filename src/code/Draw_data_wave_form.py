@@ -1,4 +1,5 @@
 # import matplotlib.pyplot as plt  # about plot the graph
+import ctypes
 import os  # read file in lib
 from pprint import pprint
 #import pandas as pd
@@ -6,6 +7,21 @@ from copy import deepcopy
 # write by my self
 from file_data_class import FileDataClass  # import the File Date
 
+
+def get_ppi():
+    LOGPIXELSX = 88
+    LOGPIXELSY = 90
+    user32 = ctypes.windll.user32
+    user32.SetProcessDPIAware()
+    dc = user32.GetDC(0)
+    pix_per_inch = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
+    #print("Horizontal DPI is", windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX))
+    #print("Vertical DPI is", windll.gdi32.GetDeviceCaps(dc, LOGPIXELSY))
+    user32.ReleaseDC(0, dc)
+    return pix_per_inch
+
+
+dpi = get_ppi()
 
 pathLoc = 'src\FilterOutput'
 names = ['CW', 'HT']
@@ -64,4 +80,4 @@ for namePart, dataDict in dataPathClass.items():
             os.mkdir(insideSaveFolderName)
 
         for i in objFile:
-            i.save_to_png(folderPath=insideSaveFolderName)
+            i.save_to_png(folderPath=insideSaveFolderName, dpi=dpi)
