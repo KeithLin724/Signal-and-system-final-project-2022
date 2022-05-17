@@ -1,4 +1,4 @@
-from rich import print
+from pprint import pprint
 from copy import deepcopy
 import os
 
@@ -41,8 +41,8 @@ class EcgFileFilter:
 
     def formatPrint(self) -> None:
         'using rich print the dic'
-        print(self.name)
-        print(self.filterDic)
+        pprint(self.name)
+        pprint(self.filterDic)
 
     def outToFile(self, folderSave: str) -> None:
         'output to file function'

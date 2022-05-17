@@ -1,12 +1,10 @@
-
-
-from copy import deepcopy
-
-from file_data_class import FileDataClass  # import the File Date
-import matplotlib.pyplot as plt  # about plot the graph
+# import matplotlib.pyplot as plt  # about plot the graph
 import os  # read file in lib
 from pprint import pprint
-import pandas as pd
+#import pandas as pd
+from copy import deepcopy
+# write by my self
+from file_data_class import FileDataClass  # import the File Date
 
 
 pathLoc = 'src\FilterOutput'
