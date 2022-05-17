@@ -53,7 +53,7 @@ for nameC, filePaths in locCheckDict.items():
 
         objList = [FileDataClass(i) for i in simplePath]
         for i in objList:
-            name, _, typeName = i.get_file_type_deatil()
+            name, _, typeName = i.get_file_type_detail()
             print(name, _, typeName)
             dataPathClass[name][typeName].append(i)
 

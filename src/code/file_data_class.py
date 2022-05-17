@@ -27,7 +27,7 @@ class FileDataClass:
         self.__state = tmpNameList[1]
         self.__dataType = tmpNameList[2]
 
-    def get_file_type_deatil(self) -> tuple:
+    def get_file_type_detail(self) -> tuple:
         return (self.__name, self.__state, self.__dataType)
 
     def get_file_data(self) -> pd.Series:
