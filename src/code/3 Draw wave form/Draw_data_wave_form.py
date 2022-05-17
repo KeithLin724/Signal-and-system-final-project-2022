@@ -1,10 +1,10 @@
 
-import ctypes
-import os  # read file in lib
-from pprint import pprint
 from copy import deepcopy
-# write by my self
+from pprint import pprint
+import os  # read file in lib
+import ctypes
 from file_data_class import FileDataClass  # import the File Date
+# write by my self
 
 
 def get_ppi():  # get the dpi

@@ -1,6 +1,8 @@
+
 import os
 from pprint import pprint
 import pandas as pd
+from PKG import FileCenter
 
 
 def Cal_HR(inputList: list) -> list:
@@ -12,15 +14,7 @@ def Cal_HR(inputList: list) -> list:
             reHR.append(tranHRPart)
 
 
-pathLoc = 'src\FilterOutput'
-names = ['CW', 'HT']
-filePathType = 'simple'
+fileCenter = FileCenter()
+dataBasic = fileCenter.get_data_basie()
 
-for name in names:
-    locCheck = os.path.join(pathLoc, name, filePathType)
-    listName = None
-
-    if os.path.isdir(locCheck):
-        listName = os.listdir(locCheck)
-        listName = [i.replace('.csv', '') for i in listName]
-        pprint(listName)
+pprint(dataBasic)
