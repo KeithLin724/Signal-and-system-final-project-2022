@@ -45,47 +45,8 @@ loc = fileCenter.get_data_item_loc()
 filetype = fileCenter.get_file_type()
 
 indexStr = 'index'
-name = names[0]
-indexFileListDataOri = dataBasic[name][indexStr]
-hrFileListDataOri = dataBasic[name]['HR']
-
-# origin data
-indexFileListData = [i.get_file_data() for i in indexFileListDataOri]
-
-hrFileListData = [i.get_file_data() for i in hrFileListDataOri]
-hrFileListDataState = [i.get_file_type_detail() for i in hrFileListDataOri]
-hrFileListDataStateList = [i for _, i, _ in hrFileListDataState]
-print(hrFileListDataStateList)
-
-
-# tran
-indexFileListDataToHR = [Cal_HR(i) for i in indexFileListData]
-
-# check length is same
-print(set([len(i) for i in indexFileListDataToHR]))
-print(set([len(i) for i in hrFileListData]))
-
-
-# pack it
-packIndexToHRAndOri = tuple(zip(hrFileListDataStateList,
-                                hrFileListData,
-                                indexFileListDataToHR))
-dataSaveDic = dict()
-for state, hrOri, indexToHR in packIndexToHRAndOri:
-    dictTmp = {'origin HR': pd.Series(hrOri),
-               'index to HR': pd.Series(indexToHR)}
-
-    dictTmp = pd.DataFrame(dictTmp)
-    # print(dictTmp)
-    dataSaveDic.update({state: dictTmp})
-
-print(len(dataSaveDic))
-
-print(dataSaveDic)
-
-# save file
 mainFolder = 'src'
-saveFolder = 'index to HR with HR File_Diff Picture'
+saveFolder = 'index to HR with HR File Diff Picture'
 
 dpi = get_ppi()
 
@@ -93,11 +54,55 @@ saveFolderPath = os.path.join(mainFolder, saveFolder)
 if os.path.exists(saveFolderPath) == False:
     os.mkdir(saveFolderPath)
 
-for state, pdDf in dataSaveDic.items():
-    save_to_png(folderPath=saveFolderPath,
-                titleStr=state,
-                data=pdDf,
-                dpi=dpi)
+
+for name in names:
+    indexFileListDataOri = dataBasic[name][indexStr]
+    hrFileListDataOri = dataBasic[name]['HR']
+
+    # save file
+
+    # origin data
+    indexFileListData = [i.get_file_data() for i in indexFileListDataOri]
+
+    hrFileListData = [i.get_file_data() for i in hrFileListDataOri]
+    hrFileListDataState = [i.get_file_type_detail() for i in hrFileListDataOri]
+    hrFileListDataStateList = [i for _, i, _ in hrFileListDataState]
+    print(hrFileListDataStateList)
+
+    # tran
+    indexFileListDataToHR = [Cal_HR(i) for i in indexFileListData]
+
+    # check length is same
+    print(set([len(i) for i in indexFileListDataToHR]))
+    print(set([len(i) for i in hrFileListData]))
+
+    # pack it
+    packIndexToHRAndOri = tuple(zip(hrFileListDataStateList,
+                                    hrFileListData,
+                                    indexFileListDataToHR))
+    dataSaveDic = dict()
+    for state, hrOri, indexToHR in packIndexToHRAndOri:
+        dictTmp = {'origin HR': pd.Series(hrOri),
+                   'index to HR': pd.Series(indexToHR)}
+
+        dictTmp = pd.DataFrame(dictTmp)
+        # print(dictTmp)
+        dataSaveDic.update({state: dictTmp})
+
+    print(len(dataSaveDic))
+
+    print(dataSaveDic)
+
+    nameSaveFolderPath = os.path.join(saveFolderPath, name)
+
+    if os.path.exists(nameSaveFolderPath) == False:
+        os.mkdir(nameSaveFolderPath)
+
+    for state, pdDf in dataSaveDic.items():
+        save_to_png(folderPath=nameSaveFolderPath,
+                    titleStr=state,
+                    data=pdDf,
+                    dpi=dpi)
 
 # print(packIndexToHRAndOri)
 
