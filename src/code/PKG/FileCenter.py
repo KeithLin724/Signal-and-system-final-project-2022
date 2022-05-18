@@ -13,6 +13,7 @@ class FileCenter:
         self.__names = ['CW', 'HT']
         self.__filePathType = 'simple'
         self.__dataBasie = dict()
+        self.__fileType = []
         emptyList = [[], [], []]
         self.__locCheckDict = dict()
 
@@ -23,7 +24,10 @@ class FileCenter:
             if path.isdir(locCheck):
                 listOfFileName = listdir(locCheck)
                 listOfName = [i.replace('.txt', '') for i in listOfFileName]
+
                 dicZipList = dict(zip(listOfName, deepcopy(emptyList)))
+
+                self.__fileType.extend(listOfName)
 
                 self.__dataBasie.update({name: dicZipList})
 
@@ -42,12 +46,22 @@ class FileCenter:
                     name, _, typeName = i.get_file_type_detail()
                     #print(name, _, typeName)
                     self.__dataBasie[name][typeName].append(i)
+        self.__fileType = tuple(set(self.__fileType))
 
     def __str__(self) -> str:
         return pformat(self.__dataBasie)
 
     def get_data_basie(self) -> dict:
         return self.__dataBasie
+
+    def get_data_name(self) -> tuple:
+        return self.__names
+
+    def get_data_item_loc(self) -> dict:
+        return self.__locCheckDict
+
+    def get_file_type(self) -> tuple:
+        return self.__fileType
 
     '''
     def __repr__(self) -> str:
