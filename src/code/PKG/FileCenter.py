@@ -1,7 +1,19 @@
 from copy import deepcopy
+import ctypes
 from pprint import pformat
 from .file_data_class import FileDataClass
 from os import path, listdir
+
+
+def get_ppi():  # get the dpi
+    LOGPIXELSX = 88
+    LOGPIXELSY = 90
+    user32 = ctypes.windll.user32
+    user32.SetProcessDPIAware()
+    dc = user32.GetDC(0)
+    pix_per_inch = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
+    user32.ReleaseDC(0, dc)
+    return pix_per_inch
 
 #dpi = get_ppi()
 
@@ -16,6 +28,7 @@ class FileCenter:
         self.__fileType = []
         emptyList = [[], [], []]
         self.__locCheckDict = dict()
+        #self.__dpi = get_ppi()
 
         for name in self.__names:
             locCheck = path.join(self.__pathLoc, name, self.__filePathType)
