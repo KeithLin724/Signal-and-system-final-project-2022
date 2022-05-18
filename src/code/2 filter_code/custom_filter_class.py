@@ -1,3 +1,10 @@
+'''
+Title:custom_filter_class
+Written By KYLiN
+This is class for filter the data 
+Date: 18/5/2022
+'''
+
 from pprint import pprint
 from copy import deepcopy
 import os

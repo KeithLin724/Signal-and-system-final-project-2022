@@ -1,3 +1,10 @@
+'''
+Title:filter list main
+Written By KYLiN
+This is code for make filter data
+Date: 18/5/2022
+'''
+
 import os
 from custom_filter_class import EcgFileFilter
 from pandas import DataFrame as df
