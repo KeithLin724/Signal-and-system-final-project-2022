@@ -9,7 +9,9 @@ import numba as nb
 
 
 # @nb.jit()
+
 def Cal_HR(inputList: list) -> list:
+    '''index to HR function'''
     reHR = []
     inputListSize = len(inputList)
     for index, val in enumerate(inputList):
@@ -22,6 +24,7 @@ def Cal_HR(inputList: list) -> list:
 
 
 def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, dpi: int = 100) -> None:
+    '''Save DataFrame to png function'''
     plt.clf()
 
     data.plot(legend=True)

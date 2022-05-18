@@ -5,7 +5,8 @@ from .file_data_class import FileDataClass
 from os import path, listdir
 
 
-def get_ppi():  # get the dpi
+def get_ppi():
+    '''get the dpi function'''
     LOGPIXELSX = 88
     LOGPIXELSY = 90
     user32 = ctypes.windll.user32
@@ -68,12 +69,14 @@ class FileCenter:
         return self.__dataBasie
 
     def get_data_name(self) -> tuple:
+        '''get data TA name from data'''
         return self.__names
 
     def get_data_item_loc(self) -> dict:
         return self.__locCheckDict
 
     def get_file_type(self) -> tuple:
+        '''get file type'''
         return self.__fileType
 
     '''
