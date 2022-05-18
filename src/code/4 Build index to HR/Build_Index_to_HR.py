@@ -25,9 +25,11 @@ def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, dpi: int = 1
     plt.clf()
 
     data.plot(legend=True)
+    titleStr = titleStr.capitalize()
     plt.title(titleStr)
-    fileName = titleStr + '_diff.png'
-    saveFilePath = os.path.join(folderPath, fileName)
+
+    #fileName = titleStr + '_diff.png'
+    saveFilePath = os.path.join(folderPath, f'{titleStr}_diff.png')
     plt.savefig(saveFilePath, dpi=dpi)
 
     plt.clf()
