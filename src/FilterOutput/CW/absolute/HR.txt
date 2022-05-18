@@ -1,6 +1,6 @@
-D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_baseline_HR.csv
-D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage1_HR.csv
-D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage2_HR.csv
-D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage3_HR.csv
-D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage4_HR.csv
-D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_recovery_HR.csv
+C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_baseline_HR.csv
+C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_stage1_HR.csv
+C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_stage2_HR.csv
+C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_stage3_HR.csv
+C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_stage4_HR.csv
+C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_recovery_HR.csv
