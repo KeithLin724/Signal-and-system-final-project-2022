@@ -7,9 +7,10 @@ from os import path, listdir
 
 def get_ppi():
     '''get the dpi function'''
-    LOGPIXELSX = 88
-    LOGPIXELSY = 90
-    user32 = ctypes.windll.user32
+    LOGPIXELSX, LOGPIXELSY, user32 = (88,
+                                      90,
+                                      ctypes.windll.user32)
+
     user32.SetProcessDPIAware()
     dc = user32.GetDC(0)
     pix_per_inch = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
@@ -32,34 +33,44 @@ class FileCenter:
         #self.__dpi = get_ppi()
 
         for name in self.__names:
-            locCheck = path.join(self.__pathLoc, name, self.__filePathType)
-            listOfFileName = None
+            locCheck = path.join(self.__pathLoc,
+                                 name,
+                                 self.__filePathType)
+            #listOfFileName = None
 
-            if path.isdir(locCheck):
-                listOfFileName = listdir(locCheck)
-                listOfName = [i.replace('.txt', '') for i in listOfFileName]
+            if not path.exists(locCheck) and not path.isdir(locCheck):
+                exit()
 
-                dicZipList = dict(zip(listOfName, deepcopy(emptyList)))
+            listOfFileName = listdir(locCheck)
+            listOfName = [i.replace('.txt', '') for i in listOfFileName]
 
-                self.__fileType.extend(listOfName)
+            dicZipList = dict(zip(listOfName, deepcopy(emptyList)))
 
-                self.__dataBasie.update({name: dicZipList})
+            self.__fileType.extend(listOfName)
 
-                self.__locCheckDict.update(
-                    {name: [path.join(locCheck, i) for i in listOfFileName]})
+            self.__dataBasie.update({name: dicZipList})
+
+            self.__locCheckDict.update({name:
+                                        [path.join(locCheck, i) for i in listOfFileName]})
 
         for _, filePaths in self.__locCheckDict.items():
             for filePath in filePaths:
-                simplePath = []
-                with open(filePath, mode='r') as f:
-                    simplePath = [i.replace('\n', '')
-                                  for i in list(f.readlines())]
+                #simplePath = []
+
+                try:
+                    with open(filePath, mode='r') as f:
+                        simplePath = [i.replace('\n', '')
+                                      for i in list(f.readlines())]
+                except Exception as e:
+                    print(e)
+                    exit()
 
                 objList = [FileDataClass(i) for i in simplePath]
                 for i in objList:
                     name, _, typeName = i.get_file_type_detail()
                     #print(name, _, typeName)
                     self.__dataBasie[name][typeName].append(i)
+
         self.__fileType = tuple(set(self.__fileType))
 
     def __str__(self) -> str:
