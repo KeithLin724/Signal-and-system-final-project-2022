@@ -12,7 +12,12 @@ import matplotlib.pyplot as plt
 
 
 def Cal_HR(inputList: list) -> list:
-    '''index to HR function'''
+    """_summary_
+        index to HR function
+    Returns:
+        list: index to HR 
+    """
+
     reHR = []
     inputListSize = len(inputList)
     for index, val in enumerate(inputList):
@@ -25,7 +30,14 @@ def Cal_HR(inputList: list) -> list:
 
 
 def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, dpi: int = 100) -> None:
-    '''Save DataFrame to png function'''
+    """_summary_
+        Save DataFrame to png function
+    Args:
+        folderPath (str): about save picture folder path 
+        titleStr (str): about the picture title 
+        data (pd.DataFrame): about the data about the picture
+        dpi (int, optional): about the picture quality Defaults to 100.
+    """
     plt.clf()
 
     data.plot(legend=True)
