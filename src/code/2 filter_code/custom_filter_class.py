@@ -1,4 +1,11 @@
-from pprint import pprint
+'''
+Title:custom_filter_class
+Written By KYLiN
+This is class for filter the data 
+Date: 18/5/2022
+'''
+
+from pprint import pformat, pprint
 from copy import deepcopy
 import os
 
@@ -37,7 +44,7 @@ class EcgFileFilter:
         # print(fileSplit)
 
     def __str__(self) -> str:
-        return str(self.filterDic)
+        return pformat(self.filterDic)
 
     def formatPrint(self) -> None:
         'using rich print the dic'

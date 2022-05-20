@@ -37,6 +37,12 @@ class FileDataClass:
         return (self.__fileName, self.__fromFolder)
 
     def save_to_png(self, folderPath: str, dpi: int = 100) -> None:
+        """_summary_
+            This is a function that saves the file
+        Args:
+            folderPath (str): the folder path to save
+            dpi (int, optional): about the save picture quality. Defaults to 100.
+        """
         plt.clf()
 
         self.__fileData.plot(legend=True, label=self.__fileData.name)

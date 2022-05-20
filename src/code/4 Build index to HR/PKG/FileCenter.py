@@ -60,6 +60,7 @@ class FileCenter:
                     name, _, typeName = i.get_file_type_detail()
                     #print(name, _, typeName)
                     self.__dataBasie[name][typeName].append(i)
+
         self.__fileType = tuple(set(self.__fileType))
 
     def __str__(self) -> str:

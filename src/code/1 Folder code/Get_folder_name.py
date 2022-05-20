@@ -1,3 +1,10 @@
+'''
+Title:Get folder name
+Written By KYLiN
+This is a get folder name code,output is a file path in .txt file 
+Date: 18/5/2022
+'''
+
 from pprint import pprint
 import os
 
