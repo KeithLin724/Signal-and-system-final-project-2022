@@ -18,15 +18,10 @@ def Cal_HR(inputList: list) -> list:
         list: index to HR 
     """
 
-    reHR = []
     inputListSize = len(inputList)
-    for index, val in enumerate(inputList):
-        if index + 1 < inputListSize:
-            #diff = inputList[index+1]-val
-            tranHRPart = 60.0*200.0/(inputList[index+1]-val)
-            reHR.append(tranHRPart)
 
-    return reHR
+    return [tranHRPart := 60.0*200.0/(inputList[index+1]-val)
+            for index, val in enumerate(inputList) if index + 1 < inputListSize]
 
 
 def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, dpi: int = 100) -> None:
@@ -55,19 +50,19 @@ def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, dpi: int = 1
 # input file center
 fileCenter = FileCenter()
 
-names = fileCenter.get_data_name()
-dataBasic = fileCenter.get_data_basie()
-loc = fileCenter.get_data_item_loc()
-filetype = fileCenter.get_file_type()
+names, dataBasic, loc, filetype = (fileCenter.get_data_name(),
+                                   fileCenter.get_data_basie(),
+                                   fileCenter.get_data_item_loc(),
+                                   fileCenter.get_file_type())
 
-indexStr = 'index'
-mainFolder = 'src'
-saveFolder = 'index to HR with HR File Diff Picture'
+indexStr, mainFolder, saveFolder = ('index',
+                                    'src',
+                                    'index to HR with HR File Diff Picture')
 
 dpi = get_ppi()
 
 saveFolderPath = os.path.join(mainFolder, saveFolder)
-if os.path.exists(saveFolderPath) == False:
+if not os.path.exists(saveFolderPath):
     os.mkdir(saveFolderPath)
 
 
@@ -98,10 +93,9 @@ for name in names:
                                     indexFileListDataToHR))
     dataSaveDic = dict()
     for state, hrOri, indexToHR in packIndexToHRAndOri:
-        dictTmp = {'origin HR': pd.Series(hrOri),
-                   'index to HR': pd.Series(indexToHR)}
 
-        dictTmp = pd.DataFrame(dictTmp)
+        dictTmp = pd.DataFrame({'origin HR': pd.Series(hrOri),
+                                'index to HR': pd.Series(indexToHR)})
         # print(dictTmp)
         dataSaveDic.update({state: dictTmp})
 
@@ -111,7 +105,7 @@ for name in names:
 
     nameSaveFolderPath = os.path.join(saveFolderPath, name)
 
-    if os.path.exists(nameSaveFolderPath) == False:
+    if not os.path.exists(nameSaveFolderPath):
         os.mkdir(nameSaveFolderPath)
 
     for state, pdDf in dataSaveDic.items():

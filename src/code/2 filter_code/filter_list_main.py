@@ -18,8 +18,8 @@ for nameFolder in folderTree:
     name = os.path.join(os.path.abspath(dataFolder), nameFolder)
 
     try:
-        lsDir = os.listdir(name)
-        folderFilter = EcgFileFilter(nameFolder)
+        lsDir, folderFilter = (os.listdir(name),
+                               EcgFileFilter(nameFolder))
 
         for i in lsDir:
             folderFilter.add(os.path.join(dataFolder, nameFolder, i))
@@ -31,5 +31,6 @@ for nameFolder in folderTree:
         exit()
 
 for key, val in folderFileName.items():
-    val.formatPrint()
+    # val.formatPrint()
+    print(val)
     val.outToFile('src\FilterOutput')
