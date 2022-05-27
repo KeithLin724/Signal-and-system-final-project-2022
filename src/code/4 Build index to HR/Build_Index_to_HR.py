@@ -120,7 +120,8 @@ for name in names:
                     dpi=dpi)
 
         # save to CSV file
-        fileNamePath = os.path.join(nameSaveFolderPathBranch, f'{state}.csv')
+        fileNamePath = os.path.join(nameSaveFolderPathBranch,
+                                    f'{state.capitalize()}_diff.csv')
         pdDf.to_csv(fileNamePath, index=False)
 
 
