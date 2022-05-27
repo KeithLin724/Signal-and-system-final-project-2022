@@ -7,8 +7,6 @@ from rich import print
 import matplotlib.pyplot as plt
 # %%
 
-# @nb.jit()
-
 
 def Cal_HR(inputList: list) -> list:
     """_summary_
