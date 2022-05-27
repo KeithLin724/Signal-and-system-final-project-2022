@@ -5,7 +5,6 @@ import pandas as pd
 from PKG import FileCenter, get_ppi
 from rich import print
 import matplotlib.pyplot as plt
-#import numba as nb
 # %%
 
 # @nb.jit()
@@ -57,7 +56,7 @@ names, dataBasic, loc, filetype = (fileCenter.get_data_name(),
 
 indexStr, mainFolder, saveFolder = ('index',
                                     'src',
-                                    'index to HR with HR File Diff Picture')
+                                    'index to HR with HR File Diff')
 
 dpi = get_ppi()
 
@@ -109,10 +108,21 @@ for name in names:
         os.mkdir(nameSaveFolderPath)
 
     for state, pdDf in dataSaveDic.items():
-        save_to_png(folderPath=nameSaveFolderPath,
+        nameSaveFolderPathBranch = os.path.join(nameSaveFolderPath, state)
+
+        if not os.path.exists(nameSaveFolderPathBranch):  # make the folder
+            os.mkdir(nameSaveFolderPathBranch)
+
+        # save the picture
+        save_to_png(folderPath=nameSaveFolderPathBranch,
                     titleStr=state,
                     data=pdDf,
                     dpi=dpi)
+
+        # save to CSV file
+        fileNamePath = os.path.join(nameSaveFolderPathBranch, f'{state}.csv')
+        pdDf.to_csv(fileNamePath, index=False)
+
 
 # print(packIndexToHRAndOri)
 
