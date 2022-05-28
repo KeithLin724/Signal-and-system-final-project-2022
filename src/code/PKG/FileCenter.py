@@ -50,6 +50,13 @@ def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, x_ticks: boo
 
 
 class FileCenter:
+    """_summary_
+
+        This is a class for control the file 
+
+        Base on the class of FileDataClass 
+    """
+
     def __init__(self) -> None:
         self.__pathLoc = 'src\FilterOutput'
 
@@ -59,7 +66,6 @@ class FileCenter:
         self.__fileType = []
         emptyList = [[], [], []]
         self.__locCheckDict = dict()
-        #self.__dpi = get_ppi()
 
         for name in self.__names:
             locCheck = path.join(self.__pathLoc,
@@ -106,6 +112,7 @@ class FileCenter:
         return pformat(self.__dataBasie)
 
     def get_data_basie(self) -> dict:
+        '''get data base name->FileType->state'''
         return self.__dataBasie
 
     def get_data_name(self) -> tuple:
