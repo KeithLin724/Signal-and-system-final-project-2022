@@ -1,23 +1,24 @@
-import os
-import pandas as pd
-import matplotlib.pyplot as plt
+from os import path
+from os.path import basename
+from pandas import read_csv, Series
+from matplotlib.pyplot import savefig, clf, close
 
 
 class FileDataClass:
     def __init__(self, path: str) -> None:
-        self.__fileName = os.path.basename(path)
-        self.__fromFolder = os.path.split(path)
+        self.__fileName, self.__fromFolder = (basename(path),
+                                              path.split(path))
 
-        self.__fileData = pd.read_csv(path,
-                                      index_col=False,
-                                      # squeeze=True,
-                                      header=0).squeeze('columns')
+        self.__fileData = read_csv(path,
+                                   index_col=False,
+                                   # squeeze=True,
+                                   header=0).squeeze('columns')
         # print(self.__fileData)
 
         tmpHeader = [float(self.__fileData.name)]
 
         tmpHeader[1:] = self.__fileData
-        self.__fileData = pd.Series(tmpHeader)
+        self.__fileData = Series(tmpHeader)
 
         tmpNameList = self.__fileName.replace('.csv', '')
         self.__fileData.name = tmpNameList.replace('_', ' ')
@@ -28,7 +29,7 @@ class FileDataClass:
     def get_file_type_detail(self) -> tuple:
         return (self.__name, self.__state, self.__dataType)
 
-    def get_file_data(self) -> pd.Series:
+    def get_file_data(self) -> Series:
         return self.__fileData
 
     def get_file_path(self) -> tuple:
@@ -41,15 +42,15 @@ class FileDataClass:
             folderPath (str): the folder path to save
             dpi (int, optional): about the save picture quality. Defaults to 100.
         """
-        plt.clf()
+        clf()
 
         self.__fileData.plot(legend=True, label=self.__fileData.name)
         saveFileName = self.__fileData.name.replace(' ', '_') + '.png'
-        saveFilePath = os.path.join(folderPath, saveFileName)
-        plt.savefig(saveFilePath, dpi=dpi)
+        saveFilePath = path.join(folderPath, saveFileName)
 
-        plt.clf()
-        plt.close()
+        savefig(saveFilePath, dpi=dpi)
+        clf()
+        close()
 
     def __repr__(self) -> str:
         return f'FileDataClass Name :{self.__name}, DataType :{self.__dataType}, State :{self.__state}'

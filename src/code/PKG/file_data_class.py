@@ -1,16 +1,16 @@
 from os import path
+from os.path import basename
 from pandas import read_csv, Series
 from matplotlib.pyplot import savefig, clf, close
 
 
 class FileDataClass:
     def __init__(self, path: str) -> None:
-        self.__fileName, self.__fromFolder = (path.basename(path),
+        self.__fileName, self.__fromFolder = (basename(path),
                                               path.split(path))
 
         self.__fileData = read_csv(path,
                                    index_col=False,
-                                   # squeeze=True,
                                    header=0).squeeze('columns')
         # print(self.__fileData)
 

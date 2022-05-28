@@ -71,7 +71,6 @@ class FileCenter:
             locCheck = path.join(self.__pathLoc,
                                  name,
                                  self.__filePathType)
-            #listOfFileName = None
 
             if not path.exists(locCheck) and not path.isdir(locCheck):
                 exit()
@@ -90,12 +89,11 @@ class FileCenter:
 
         for _, filePaths in self.__locCheckDict.items():
             for filePath in filePaths:
-                #simplePath = []
-
                 try:
                     with open(filePath, mode='r') as f:
                         simplePath = [i.replace('\n', '')
                                       for i in list(f.readlines())]
+
                 except Exception as e:
                     print(e)
                     exit()
