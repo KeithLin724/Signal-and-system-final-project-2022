@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_baseline_HR.csv
 C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_baseline_index.csv
 C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_baseline_SV.csv
@@ -16,3 +17,23 @@ C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-20
 C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_stage4_HR.csv
 C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_stage4_index.csv
 C:\Users\liewm\OneDrive\Desktop\Signal&System\Signal-and-system-final-project-2022\src\data\CW\CW_stage4_SV.csv
+=======
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_baseline_HR.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_baseline_index.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_baseline_SV.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_recovery_HR.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_recovery_index.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_recovery_SV.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage1_HR.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage1_index.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage1_SV.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage2_HR.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage2_index.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage2_SV.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage3_HR.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage3_index.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage3_SV.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage4_HR.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage4_index.csv
+D:\Code\Visual Code\Python\Mini project\Signal and system final project 2022\src\data\CW\CW_stage4_SV.csv
+>>>>>>> origin/KYLiN_Update

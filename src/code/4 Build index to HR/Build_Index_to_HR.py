@@ -1,30 +1,35 @@
-
+# %%
 import os
 from pprint import pprint
 import pandas as pd
 from PKG import FileCenter, get_ppi
 from rich import print
 import matplotlib.pyplot as plt
-import numba as nb
+# %%
 
-
-# @nb.jit()
 
 def Cal_HR(inputList: list) -> list:
-    '''index to HR function'''
-    reHR = []
-    inputListSize = len(inputList)
-    for index, val in enumerate(inputList):
-        if index + 1 < inputListSize:
-            #diff = inputList[index+1]-val
-            tranHRPart = 60.0*200.0/(inputList[index+1]-val)
-            reHR.append(tranHRPart)
+    """_summary_
+        index to HR function
+    Returns:
+        list: index to HR 
+    """
 
-    return reHR
+    inputListSize = len(inputList)
+
+    return [tranHRPart := 60.0*200.0/(inputList[index+1]-val)
+            for index, val in enumerate(inputList) if index + 1 < inputListSize]
 
 
 def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, dpi: int = 100) -> None:
-    '''Save DataFrame to png function'''
+    """_summary_
+        Save DataFrame to png function
+    Args:
+        folderPath (str): about save picture folder path 
+        titleStr (str): about the picture title 
+        data (pd.DataFrame): about the data about the picture
+        dpi (int, optional): about the picture quality Defaults to 100.
+    """
     plt.clf()
 
     data.plot(legend=True)
@@ -42,19 +47,19 @@ def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, dpi: int = 1
 # input file center
 fileCenter = FileCenter()
 
-names = fileCenter.get_data_name()
-dataBasic = fileCenter.get_data_basie()
-loc = fileCenter.get_data_item_loc()
-filetype = fileCenter.get_file_type()
+names, dataBasic, loc, filetype = (fileCenter.get_data_name(),
+                                   fileCenter.get_data_basie(),
+                                   fileCenter.get_data_item_loc(),
+                                   fileCenter.get_file_type())
 
-indexStr = 'index'
-mainFolder = 'src'
-saveFolder = 'index to HR with HR File Diff Picture'
+indexStr, mainFolder, saveFolder = ('index',
+                                    'src',
+                                    'index to HR with HR File Diff')
 
 dpi = get_ppi()
 
 saveFolderPath = os.path.join(mainFolder, saveFolder)
-if os.path.exists(saveFolderPath) == False:
+if not os.path.exists(saveFolderPath):
     os.mkdir(saveFolderPath)
 
 
@@ -85,10 +90,9 @@ for name in names:
                                     indexFileListDataToHR))
     dataSaveDic = dict()
     for state, hrOri, indexToHR in packIndexToHRAndOri:
-        dictTmp = {'origin HR': pd.Series(hrOri),
-                   'index to HR': pd.Series(indexToHR)}
 
-        dictTmp = pd.DataFrame(dictTmp)
+        dictTmp = pd.DataFrame({'origin HR': pd.Series(hrOri),
+                                'index to HR': pd.Series(indexToHR)})
         # print(dictTmp)
         dataSaveDic.update({state: dictTmp})
 
@@ -98,14 +102,26 @@ for name in names:
 
     nameSaveFolderPath = os.path.join(saveFolderPath, name)
 
-    if os.path.exists(nameSaveFolderPath) == False:
+    if not os.path.exists(nameSaveFolderPath):
         os.mkdir(nameSaveFolderPath)
 
     for state, pdDf in dataSaveDic.items():
-        save_to_png(folderPath=nameSaveFolderPath,
+        nameSaveFolderPathBranch = os.path.join(nameSaveFolderPath, state)
+
+        if not os.path.exists(nameSaveFolderPathBranch):  # make the folder
+            os.mkdir(nameSaveFolderPathBranch)
+
+        # save the picture
+        save_to_png(folderPath=nameSaveFolderPathBranch,
                     titleStr=state,
                     data=pdDf,
                     dpi=dpi)
+
+        # save to CSV file
+        fileNamePath = os.path.join(nameSaveFolderPathBranch,
+                                    f'{state.capitalize()}_diff.csv')
+        pdDf.to_csv(fileNamePath, index=False)
+
 
 # print(packIndexToHRAndOri)
 

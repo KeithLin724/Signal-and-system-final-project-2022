@@ -23,9 +23,7 @@ class FileDataClass:
         self.__fileData.name = tmpNameList.replace('_', ' ')
         tmpNameList = tmpNameList.split('_')
 
-        self.__name = tmpNameList[0]
-        self.__state = tmpNameList[1]
-        self.__dataType = tmpNameList[2]
+        self.__name, self.__state, self.__dataType = tmpNameList
 
     def get_file_type_detail(self) -> tuple:
         return (self.__name, self.__state, self.__dataType)
@@ -37,6 +35,12 @@ class FileDataClass:
         return (self.__fileName, self.__fromFolder)
 
     def save_to_png(self, folderPath: str, dpi: int = 100) -> None:
+        """_summary_
+            This is a function that saves the file
+        Args:
+            folderPath (str): the folder path to save
+            dpi (int, optional): about the save picture quality. Defaults to 100.
+        """
         plt.clf()
 
         self.__fileData.plot(legend=True, label=self.__fileData.name)
