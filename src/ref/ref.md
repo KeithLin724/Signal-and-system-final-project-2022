@@ -1,4 +1,7 @@
 # ref 
+### Useful merge 
+https://stackoverflow.com/questions/21651185/git-merge-a-remote-branch-locally
+
 
 ### video ref 
 https://drive.google.com/file/d/1f5b2t2g3JKPVJqcaArQZPwzXe4rxENjH/view

@@ -8,13 +8,14 @@ from file_data_class import FileDataClass  # import the File Date
 
 
 def get_ppi():  # get the dpi
-    LOGPIXELSX = 88
-    LOGPIXELSY = 90
-    user32 = ctypes.windll.user32
+    LOGPIXELSX, LOGPIXELSY, user32 = (88,
+                                      90,
+                                      ctypes.windll.user32)
     user32.SetProcessDPIAware()
     dc = user32.GetDC(0)
     pix_per_inch = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
     user32.ReleaseDC(0, dc)
+
     return pix_per_inch
 
 
@@ -24,22 +25,25 @@ pathLoc = 'src\FilterOutput'
 names = ['CW', 'HT']
 filePathType = 'simple'
 
-dataPathClass = dict()
-emptyList = [[], [], []]
-locCheckDict = dict()
+dataPathClass, emptyList, locCheckDict = (dict(),
+                                          [[], [], []],
+                                          dict())
+
 for name in names:
     locCheck = os.path.join(pathLoc, name, filePathType)
-    listOfFileName = None
 
-    if os.path.isdir(locCheck):
-        listOfFileName = os.listdir(locCheck)
-        listOfName = [i.replace('.txt', '') for i in listOfFileName]
-        dicZipList = dict(zip(listOfName, deepcopy(emptyList)))
+    if not os.path.exists(locCheck) and not os.path.isdir(locCheck):
+        print('is not a directory')
+        exit()
 
-        dataPathClass.update({name: dicZipList})
+    listOfFileName = os.listdir(locCheck)
+    listOfName = [i.replace('.txt', '') for i in listOfFileName]
+    dicZipList = dict(zip(listOfName, deepcopy(emptyList)))
 
-        locCheckDict.update(
-            {name: [os.path.join(locCheck, i) for i in listOfFileName]})
+    dataPathClass.update({name: dicZipList})
+
+    locCheckDict.update(
+        {name: [os.path.join(locCheck, i) for i in listOfFileName]})
 
 
 pprint(dataPathClass)
@@ -60,20 +64,20 @@ for nameC, filePaths in locCheckDict.items():
 # save the png
 # make the path
 saveFolderName = os.path.join('src', 'file Picture')
-if os.path.exists(saveFolderName) == False:
+if not os.path.exists(saveFolderName):
     os.mkdir(saveFolderName)
 # open the dict
 for namePart, dataDict in dataPathClass.items():
 
     outSaveFolderName = os.path.join(saveFolderName, namePart)
 
-    if os.path.exists(outSaveFolderName) == False:
+    if not os.path.exists(outSaveFolderName):
         os.mkdir(outSaveFolderName)
 
     for typeName, objFile in dataDict.items():
         insideSaveFolderName = os.path.join(outSaveFolderName, typeName)
 
-        if os.path.exists(insideSaveFolderName) == False:
+        if not os.path.exists(insideSaveFolderName):
             os.mkdir(insideSaveFolderName)
 
         for i in objFile:
