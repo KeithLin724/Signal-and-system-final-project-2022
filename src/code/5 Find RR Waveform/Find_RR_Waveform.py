@@ -28,9 +28,13 @@ def to_rr_interval(dataHR: list) -> list:
 
 mainFolder, branchFolder = 'src', 'RR Data'
 saveMainFolder = os.path.join(mainFolder, branchFolder)
+saveRrCSVFolder = os.path.join(mainFolder, 'RR_csv')
 # save folder
 if not os.path.exists(saveMainFolder):
     os.mkdir(saveMainFolder)
+
+if not os.path.exists(saveRrCSVFolder):
+    os.mkdir(saveRrCSVFolder)
 
 taData = (dataBase[dataName[0]]['HR'], dataBase[dataName[1]]['HR'])
 taDataDict = dict(zip(dataName, taData))
@@ -50,7 +54,9 @@ for taName, valDataList in taDataDict.items():
         #print(len(tmpFileList) == len(tranToRR))
         tmpDf = pd.DataFrame({'Heart Beats': tmpFileList,
                               'RRI Value': tranToRR})
-        dataChangeDict[taName].append((fileState, tmpDf))
+        RRSerial = pd.Series(tranToRR)
+
+        dataChangeDict[taName].append((fileState, tmpDf, RRSerial))
 
 
 # check the data
@@ -59,10 +65,16 @@ print(dataChangeDict)
 
 for taName, valTuples in dataChangeDict.items():
     savePath = os.path.join(saveMainFolder, taName)
+
     if not os.path.exists(savePath):
         os.mkdir(savePath)
 
-    for state, dataDf in valTuples:
+    rrCSVPath = os.path.join(saveRrCSVFolder, taName)  # save for rr csv file
+
+    if not os.path.exists(rrCSVPath):
+        os.mkdir(rrCSVPath)
+
+    for state, dataDf, RRdata in valTuples:
         saveBranchFolder = os.path.join(savePath, state)
 
         if not os.path.exists(saveBranchFolder):
@@ -78,3 +90,6 @@ for taName, valTuples in dataChangeDict.items():
         # save file name
         fileCSVSavePath = os.path.join(saveBranchFolder, f'{title}.csv')
         dataDf.to_csv(fileCSVSavePath, index=False)
+
+        rrCSVFilePath = os.path.join(rrCSVPath, f'RR_{state}.csv')
+        RRdata.to_csv(rrCSVFilePath, index=False)
