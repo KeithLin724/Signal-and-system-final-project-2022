@@ -1,8 +1,10 @@
+from .file_data_class import FileDataClass
+from os import path, listdir
+import pandas as pd
 from copy import deepcopy
 import ctypes
 from pprint import pformat
-from .file_data_class import FileDataClass
-from os import path, listdir
+from matplotlib import pyplot as plt
 
 
 def get_ppi():
@@ -18,6 +20,33 @@ def get_ppi():
     return pix_per_inch
 
 #dpi = get_ppi()
+
+
+def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, x_ticks: bool = False, dpi: int = 100) -> None:
+    """_summary_
+        Save DataFrame to png function
+    Args:
+        folderPath (str): about save picture folder path 
+        titleStr (str): about the picture title 
+        data (pd.DataFrame): about the data about the picture
+        x_ticks (bool, optional): is use the first columns to x axis
+        dpi (int, optional): about the dpi of the picture
+    """
+
+    plt.clf()
+    if x_ticks:
+        data.set_index(data.columns.values[0]).plot(legend=True)
+    else:
+        data.plot(legend=True)
+    titleStr = titleStr.capitalize()
+    plt.title(titleStr)
+
+    #fileName = titleStr + '_diff.png'
+    saveFilePath = path.join(folderPath, f'{titleStr}.png')
+    plt.savefig(saveFilePath, dpi=dpi)
+
+    plt.clf()
+    plt.close()
 
 
 class FileCenter:
