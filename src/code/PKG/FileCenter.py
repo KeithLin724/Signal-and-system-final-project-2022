@@ -1,28 +1,28 @@
 from .file_data_class import FileDataClass
 from os import path, listdir
-import pandas as pd
+from pandas import DataFrame
 from copy import deepcopy
-import ctypes
+from ctypes import windll
 from pprint import pformat
-from matplotlib import pyplot as plt
+from matplotlib.pyplot import savefig, clf, close, title
 
 
 def get_ppi():
     '''get the dpi function'''
     LOGPIXELSX, LOGPIXELSY, user32 = (88,
                                       90,
-                                      ctypes.windll.user32)
+                                      windll.user32)
 
     user32.SetProcessDPIAware()
     dc = user32.GetDC(0)
-    pix_per_inch = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
+    pix_per_inch = windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
     user32.ReleaseDC(0, dc)
     return pix_per_inch
 
 #dpi = get_ppi()
 
 
-def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, x_ticks: bool = False, dpi: int = 100) -> None:
+def save_to_png(folderPath: str, titleStr: str, data: DataFrame, x_ticks: bool = False, dpi: int = 100) -> None:
     """_summary_
         Save DataFrame to png function
     Args:
@@ -33,20 +33,20 @@ def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, x_ticks: boo
         dpi (int, optional): about the dpi of the picture
     """
 
-    plt.clf()
+    clf()
     if x_ticks:
         data.set_index(data.columns.values[0]).plot(legend=True)
     else:
         data.plot(legend=True)
     titleStr = titleStr.capitalize()
-    plt.title(titleStr)
+    title(titleStr)
 
     #fileName = titleStr + '_diff.png'
     saveFilePath = path.join(folderPath, f'{titleStr}.png')
-    plt.savefig(saveFilePath, dpi=dpi)
+    savefig(saveFilePath, dpi=dpi)
 
-    plt.clf()
-    plt.close()
+    clf()
+    close()
 
 
 class FileCenter:

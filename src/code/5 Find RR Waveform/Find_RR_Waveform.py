@@ -7,10 +7,10 @@ import os
 # open data
 fileCenter = FileCenter()
 # get data
-dataBase = fileCenter.get_data_basie()
-dataName = fileCenter.get_data_name()
-dataType = fileCenter.get_file_type()
-dpi = get_ppi()
+dataBase, dataName, dataType, dpi = (fileCenter.get_data_basie(),
+                                     fileCenter.get_data_name(),
+                                     fileCenter.get_file_type(),
+                                     get_ppi())
 
 
 def to_rr_interval(dataHR: list) -> list:
@@ -28,8 +28,10 @@ def to_rr_interval(dataHR: list) -> list:
 
 # about the path
 mainFolder, branchFolder = 'src', 'RR Data'
-saveMainFolder = os.path.join(mainFolder, branchFolder)
-saveRrCSVFolder = os.path.join(mainFolder, 'RR_csv')
+saveMainFolder, saveRrCSVFolder = (os.path.join(mainFolder,
+                                                branchFolder),
+                                   os.path.join(mainFolder,
+                                                'RR_csv'))
 
 # save folder
 if not os.path.exists(saveMainFolder):

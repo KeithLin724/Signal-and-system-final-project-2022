@@ -5,10 +5,11 @@ import os
 # TODO: open data
 fileCenter = FileCenter()
 
-dataType = fileCenter.get_file_type()
-dataBase = fileCenter.get_data_basie()
-dataName = fileCenter.get_data_name()  # TODO: get ta name
-dpi = get_ppi()
+# TODO: get ta name
+dataType, dataBase, dataName, dpi = (fileCenter.get_file_type(),
+                                     fileCenter.get_data_basie(),
+                                     fileCenter.get_data_name(),
+                                     get_ppi())
 
 
 dataTaList = (dataBase[dataName[0]]['SV'], dataBase[dataName[1]]['SV'])
