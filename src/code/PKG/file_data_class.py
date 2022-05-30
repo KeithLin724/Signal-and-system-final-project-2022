@@ -26,12 +26,15 @@ class FileDataClass:
         self.__name, self.__state, self.__dataType = tmpNameList
 
     def get_file_type_detail(self) -> tuple:
+        '''get data type Name , state, Data Type'''
         return (self.__name, self.__state, self.__dataType)
 
     def get_file_data(self) -> Series:
+        '''return the file data using Pandas Series type'''
         return self.__fileData
 
     def get_file_path(self) -> tuple:
+        '''get file simple path'''
         return (self.__fileName, self.__fromFolder)
 
     def save_to_png(self, folderPath: str, dpi: int = 100) -> None:

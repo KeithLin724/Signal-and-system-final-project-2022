@@ -34,10 +34,12 @@ def save_to_png(folderPath: str, titleStr: str, data: DataFrame, x_ticks: bool =
     """
 
     clf()
+
     if x_ticks:
         data.set_index(data.columns.values[0]).plot(legend=True)
     else:
         data.plot(legend=True)
+
     titleStr = titleStr.capitalize()
     title(titleStr)
 
@@ -124,6 +126,14 @@ class FileCenter:
         '''get file type'''
         return self.__fileType
 
+    def get_file_of_name(self, name: str) -> dict:
+        '''get dict using name '''
+        return self.__dataBasie[name] if name in self.__names else dict()
+
+    def get_file_of_type(self, name: str, typeOfName: str) -> list:
+        '''get file using name and type'''
+        return self.__dataBasie[name][typeOfName] \
+            if name in self.__names and typeOfName in self.__fileType else dict()
     '''
     def __repr__(self) -> str:
         return str()

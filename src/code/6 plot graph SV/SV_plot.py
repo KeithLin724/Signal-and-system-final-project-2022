@@ -1,5 +1,6 @@
 from copy import deepcopy
-from PKG import *
+from PKG import FileCenter, get_ppi
+
 import os
 
 # TODO: open data
