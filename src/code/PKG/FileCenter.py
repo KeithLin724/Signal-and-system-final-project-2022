@@ -8,10 +8,8 @@ from matplotlib.pyplot import savefig, clf, close, title
 
 
 def get_ppi():
-    '''get the dpi function'''
-    LOGPIXELSX, LOGPIXELSY, user32 = (88,
-                                      90,
-                                      windll.user32)
+    """get the dpi function"""
+    LOGPIXELSX, LOGPIXELSY, user32 = (88, 90, windll.user32)
 
     user32.SetProcessDPIAware()
     dc = user32.GetDC(0)
@@ -19,10 +17,17 @@ def get_ppi():
     user32.ReleaseDC(0, dc)
     return pix_per_inch
 
-#dpi = get_ppi()
+
+# dpi = get_ppi()
 
 
-def save_to_png(folderPath: str, titleStr: str, data: DataFrame, x_ticks: bool = False, dpi: int = 100) -> None:
+def save_to_png(
+    folderPath: str,
+    titleStr: str,
+    data: DataFrame,
+    x_ticks: bool = False,
+    dpi: int = 100,
+) -> None:
     """_summary_
         Save DataFrame to png function
     Args:
@@ -43,8 +48,8 @@ def save_to_png(folderPath: str, titleStr: str, data: DataFrame, x_ticks: bool =
     titleStr = titleStr.capitalize()
     title(titleStr)
 
-    #fileName = titleStr + '_diff.png'
-    saveFilePath = path.join(folderPath, f'{titleStr}.png')
+    # fileName = titleStr + '_diff.png'
+    saveFilePath = path.join(folderPath, f"{titleStr}.png")
     savefig(saveFilePath, dpi=dpi)
 
     clf()
@@ -60,25 +65,23 @@ class FileCenter:
     """
 
     def __init__(self) -> None:
-        self.__pathLoc = 'src\FilterOutput'
+        self.__pathLoc = "src\FilterOutput"
 
-        self.__names = ['CW', 'HT']
-        self.__filePathType = 'simple'
+        self.__names = ["CW", "HT"]
+        self.__filePathType = "simple"
         self.__dataBasie = dict()
         self.__fileType = []
         emptyList = [[], [], []]
         self.__locCheckDict = dict()
 
         for name in self.__names:
-            locCheck = path.join(self.__pathLoc,
-                                 name,
-                                 self.__filePathType)
+            locCheck = path.join(self.__pathLoc, name, self.__filePathType)
 
             if not path.exists(locCheck) and not path.isdir(locCheck):
                 exit()
 
             listOfFileName = listdir(locCheck)
-            listOfName = [i.replace('.txt', '') for i in listOfFileName]
+            listOfName = [i.replace(".txt", "") for i in listOfFileName]
 
             dicZipList = dict(zip(listOfName, deepcopy(emptyList)))
 
@@ -86,15 +89,15 @@ class FileCenter:
 
             self.__dataBasie.update({name: dicZipList})
 
-            self.__locCheckDict.update({name:
-                                        [path.join(locCheck, i) for i in listOfFileName]})
+            self.__locCheckDict.update(
+                {name: [path.join(locCheck, i) for i in listOfFileName]}
+            )
 
         for _, filePaths in self.__locCheckDict.items():
             for filePath in filePaths:
                 try:
-                    with open(filePath, mode='r') as f:
-                        simplePath = [i.replace('\n', '')
-                                      for i in list(f.readlines())]
+                    with open(filePath, mode="r") as f:
+                        simplePath = [i.replace("\n", "") for i in list(f.readlines())]
 
                 except Exception as e:
                     print(e)
@@ -103,7 +106,7 @@ class FileCenter:
                 objList = [FileDataClass(i) for i in simplePath]
                 for i in objList:
                     name, _, typeName = i.get_file_type_detail()
-                    #print(name, _, typeName)
+                    # print(name, _, typeName)
                     self.__dataBasie[name][typeName].append(i)
 
         self.__fileType = tuple(set(self.__fileType))
@@ -112,34 +115,33 @@ class FileCenter:
         return pformat(self.__dataBasie)
 
     def get_data_basie(self) -> dict:
-        '''get data base name->FileType->state'''
+        """get data base name->FileType->state"""
         return self.__dataBasie
 
     def get_data_name(self) -> tuple:
-        '''get data TA name from data'''
+        """get data TA name from data"""
         return self.__names
 
     def get_data_item_loc(self) -> dict:
         return self.__locCheckDict
 
     def get_file_type(self) -> tuple:
-        '''get file type'''
+        """get file type"""
         return self.__fileType
 
     def get_file_of_name(self, name: str) -> dict:
-        '''get dict using name '''
+        """get dict using name """
         return self.__dataBasie[name] if name in self.__names else dict()
 
     def get_file_of_type(self, name: str, typeOfName: str) -> list:
-        '''get file using name and type'''
-        return self.__dataBasie[name][typeOfName] \
-            if name in self.__names and typeOfName in self.__fileType else dict()
-    '''
+        """get file using name and type"""
+        return (
+            self.__dataBasie[name][typeOfName]
+            if name in self.__names and typeOfName in self.__fileType
+            else dict()
+        )
+
+    """
     def __repr__(self) -> str:
         return str()
-    '''
-
-
-# debug
-#tmp = FileCenter()
-# print(tmp)
+    """
