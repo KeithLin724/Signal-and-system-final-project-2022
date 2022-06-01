@@ -5,10 +5,12 @@ from matplotlib.pyplot import savefig, clf, close
 
 
 class FileDataClass:
+
     def __init__(self, path: str) -> None:
         self.__fileName, self.__fromFolder = basename(path), path.split(path)
 
-        self.__fileData = read_csv(path, index_col=False, header=0).squeeze("columns")
+        self.__fileData = read_csv(path, index_col=False,
+                                   header=0).squeeze("columns")
         # print(self.__fileData)
 
         tmpHeader = [float(self.__fileData.name)]
@@ -16,9 +18,9 @@ class FileDataClass:
         tmpHeader[1:] = self.__fileData
         self.__fileData = Series(tmpHeader)
 
-        tmpNameList = self.__fileName.replace(".csv", "")
-        self.__fileData.name = tmpNameList.replace("_", " ")
-        tmpNameList = tmpNameList.split("_")
+        tmpNameList = self.__fileName.replace('.csv', '')
+        self.__fileData.name = tmpNameList.replace('_', ' ')
+        tmpNameList = tmpNameList.split('_')
 
         self.__name, self.__state, self.__dataType = tmpNameList
 

@@ -90,14 +90,15 @@ class FileCenter:
             self.__dataBasie.update({name: dicZipList})
 
             self.__locCheckDict.update(
-                {name: [path.join(locCheck, i) for i in listOfFileName]}
-            )
+                {name: [path.join(locCheck, i) for i in listOfFileName]})
 
         for _, filePaths in self.__locCheckDict.items():
             for filePath in filePaths:
                 try:
-                    with open(filePath, mode="r") as f:
-                        simplePath = [i.replace("\n", "") for i in list(f.readlines())]
+                    with open(filePath, mode='r') as f:
+                        simplePath = [
+                            i.replace("\n", "") for i in list(f.readlines())
+                        ]
 
                 except Exception as e:
                     print(e)
@@ -135,11 +136,8 @@ class FileCenter:
 
     def get_file_of_type(self, name: str, typeOfName: str) -> list:
         """get file using name and type"""
-        return (
-            self.__dataBasie[name][typeOfName]
-            if name in self.__names and typeOfName in self.__fileType
-            else dict()
-        )
+        return (self.__dataBasie[name][typeOfName] if name in self.__names
+                and typeOfName in self.__fileType else dict())
 
     """
     def __repr__(self) -> str:

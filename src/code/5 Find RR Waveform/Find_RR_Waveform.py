@@ -29,7 +29,7 @@ def to_rr_interval(dataHR: list) -> list:
 
 
 # about the path
-mainFolder, branchFolder = "src", "RR Data"
+mainFolder, branchFolder = 'src', 'RR Data'
 
 saveMainFolder, saveRrCSVFolder = (
     os.path.join(mainFolder, branchFolder),
@@ -48,7 +48,10 @@ taDataDict = dict(zip(dataName, taData))
 dataStruct = []
 
 # make the dataChange for save the tuple data (file state , DataFrame and RR data)
-dataChangeDict = {dataName[0]: deepcopy(dataStruct), dataName[1]: deepcopy(dataStruct)}
+dataChangeDict = {
+    dataName[0]: deepcopy(dataStruct),
+    dataName[1]: deepcopy(dataStruct)
+}
 
 for taName, valDataList in taDataDict.items():
     for fileObj in valDataList:
@@ -59,18 +62,18 @@ for taName, valDataList in taDataDict.items():
         _, fileState, _ = fileObj.get_file_type_detail()
         tranToRR = to_rr_interval(tmpFileList)
 
-        tmpDf = pd.DataFrame({"Heart Beats": tmpFileList, "RRI Value": tranToRR})
+        tmpDf = pd.DataFrame({
+            "Heart Beats": tmpFileList,
+            "RRI Value": tranToRR
+        })
         RRSeries = pd.Series(tranToRR)
 
         # save data
-        dataChangeDict[taName].append(
-            (
-                fileState,  # the state of the file
-                tmpDf,  # Data Frame of the RR and Heart Beats
-                RRSeries,
-            )
-        )  # RR Series (for other code )
-
+        dataChangeDict[taName].append((
+            fileState,  # the state of the file
+            tmpDf,  # Data Frame of the RR and Heart Beats
+            RRSeries,
+        ))  # RR Series (for other code )
 
 # check the data
 print(dataChangeDict)

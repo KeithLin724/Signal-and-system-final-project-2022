@@ -37,16 +37,15 @@ class RRClass:
 
             for objFile in listOfFileName:
                 filePath = os.path.join(tmpPath, objFile)
-                dataRead = pd.read_csv(filePath, index_col=False, header=0).squeeze(
-                    "columns"
-                )
+                dataRead = pd.read_csv(filePath, index_col=False,
+                                       header=0).squeeze("columns")
                 # get header data
                 tmpHeader = [float(dataRead.name)]
                 tmpHeader[1:] = dataRead
                 dataRead = pd.Series(tmpHeader)
 
                 # get state
-                fileState = objFile.replace(".csv", "").replace("RR_", "")
+                fileState = objFile.replace('.csv', '').replace('RR_', '')
                 self.__fileState.append(fileState)
                 tmpTaDict.update({fileState: dataRead})
 
