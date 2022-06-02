@@ -21,4 +21,6 @@ https://www.freecodecamp.org/news/print-statement-in-python-how-to-print-with-ex
 
 https://cloud.tencent.com/developer/article/1411006
 
+https://www.delftstack.com/zh-tw/howto/python/python-list-comprehension-if-else/
+
 

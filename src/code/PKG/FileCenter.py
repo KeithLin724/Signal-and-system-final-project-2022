@@ -65,7 +65,7 @@ class FileCenter:
     """
 
     def __init__(self) -> None:
-        self.__pathLoc = "src\FilterOutput"
+        self.__pathLoc = "src\\FilterOutput"
 
         self.__names = ["CW", "HT"]
         self.__filePathType = "simple"
