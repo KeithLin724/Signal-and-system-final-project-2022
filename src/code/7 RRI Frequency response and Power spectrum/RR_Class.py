@@ -25,12 +25,14 @@ class RRClass:
         self.__dataBase, self.__dataBaseM2, self.__dataBaseAll = (dict(),
                                                                   dict(),
                                                                   dict())
+
         tmpTaDataAll = [[], []]
 
         findPathAllList = (os.path.join(self.__mainFolderName,
                                         self.__folderName),
                            os.path.join(self.__mainFolderName,
                                         self.__folderNameM2))
+
         # TODO: this path is it exists
         for findPath in findPathAllList:
             if not os.path.exists(findPath) and not os.path.isdir(findPath):
@@ -91,7 +93,7 @@ class RRClass:
         return self.__dataBase
 
     def get_data_base_M2(self) -> dict:
-        """get the data base of RR_csv(Name --> State --> Data) M2"""
+        """get the data base of RRM2_csv(Name --> State --> Data) M2"""
         return self.__dataBaseM2
 
     def get_ta_name(self) -> tuple:
