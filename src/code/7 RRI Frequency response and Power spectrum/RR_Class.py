@@ -25,76 +25,60 @@ class RRClass:
         self.__dataBase, self.__dataBaseM2, self.__dataBaseAll = (dict(),
                                                                   dict(),
                                                                   dict())
-        tmpTaData, tmpTaDataM2 = [], []
+        tmpTaDataAll = [[], []]
 
-        findPath, findPathM2 = (os.path.join(self.__mainFolderName,
-                                             self.__folderName),
-                                os.path.join(self.__mainFolderName,
-                                             self.__folderNameM2))
-
+        findPathAllList = (os.path.join(self.__mainFolderName,
+                                        self.__folderName),
+                           os.path.join(self.__mainFolderName,
+                                        self.__folderNameM2))
         # TODO: this path is it exists
-        if not os.path.exists(findPath) and not os.path.isdir(findPath):
-            print(f"path is not found\nPath : {tmpPath}")
-            exit()
-        # TODO: add the new path
-        if not os.path.exists(findPathM2) and not os.path.isdir(findPathM2):
-            print(f"path is not found\nPath : {tmpPath}")
-            exit()
+        for findPath in findPathAllList:
+            if not os.path.exists(findPath) and not os.path.isdir(findPath):
+                print(f"path is not found\nPath : {findPath}")
+                exit()
 
         for taName in self.__taName:
-            tmpPath, tmpPathM2 = (os.path.join(findPath, taName),
-                                  os.path.join(findPathM2, taName))
 
-            if not os.path.exists(tmpPath):
-                print(f"path is not found\nPath : {tmpPath}")
-                exit()
+            tmpPathList = [
+                os.path.join(filePath, taName) for filePath in findPathAllList
+            ]
 
-            if not os.path.exists(tmpPathM2):
-                print(f"path is not found\nPath : {tmpPath}")
-                exit()
+            # check the path is it exists
+            for tmpPathObj in tmpPathList:
+                if not os.path.exists(tmpPathObj):
+                    print(f"path is not found\nPath : {tmpPathObj}")
+                    exit()
 
             # TODO: Read the under folder file
-            listOfFileName, listOfFileNameM2 = (os.listdir(tmpPath),
-                                                os.listdir(tmpPathM2))
-            tmpTaDict = dict()
+            listOfFileNameAllList = [os.listdir(i) for i in tmpPathList]
+            replaceName = ['RR_', 'RRM2_']
 
-            for objFile in listOfFileName:
-                dataRead = pd.read_csv(os.path.join(tmpPath, objFile),
-                                       index_col=False,
-                                       header=0).squeeze("columns")
-                # get header data
-                tmpHeader = [float(dataRead.name)]
-                tmpHeader[1:] = dataRead
-                dataRead = pd.Series(tmpHeader)
+            usingFor = list(
+                zip(listOfFileNameAllList, tmpTaDataAll, tmpPathList,
+                    replaceName))
 
-                # get state
-                fileState = objFile.replace('.csv', '').replace('RR_', '')
-                self.__fileState.append(fileState)
-                tmpTaDict.update({fileState: dataRead})
+            for listOfFileName, tmpTaData, tmpPath, takeName in usingFor:
+                tmpTaDict = dict()
+                for objFile in listOfFileName:
+                    dataRead = pd.read_csv(os.path.join(tmpPath, objFile),
+                                           index_col=False,
+                                           header=0).squeeze("columns")
+                    # get header data
+                    tmpHeader = [float(dataRead.name)]
+                    tmpHeader[1:] = dataRead
+                    dataRead = pd.Series(tmpHeader)
 
-            tmpTaData.append(tmpTaDict)
+                    # get state
+                    fileState = objFile.replace('.csv',
+                                                '').replace(takeName, '')
+                    self.__fileState.append(fileState)
+                    tmpTaDict.update({fileState: dataRead})
 
-            tmpTaDict = dict()
-
-            for objFile in listOfFileNameM2:
-                dataRead = pd.read_csv(os.path.join(tmpPathM2, objFile),
-                                       index_col=False,
-                                       header=0).squeeze("columns")
-                # get header data
-                tmpHeader = [float(dataRead.name)]
-                tmpHeader[1:] = dataRead
-                dataRead = pd.Series(tmpHeader)
-
-                # get state
-                fileState = objFile.replace('.csv', '').replace('RRM2_', '')
-                self.__fileState.append(fileState)
-                tmpTaDict.update({fileState: dataRead})
-
-            tmpTaDataM2.append(tmpTaDict)
+                tmpTaData.append(tmpTaDict)
 
         # base data
-        self.__dataBase = dict(zip(self.__taName, tmpTaData))
-        self.__dataBaseM2 = dict(zip(self.__taName, tmpTaDataM2))
+        self.__dataBase = dict(zip(self.__taName, tmpTaDataAll[0]))
+        self.__dataBaseM2 = dict(zip(self.__taName, tmpTaDataAll[1]))
 
         # add data
         self.__dataBaseAll = dict(
@@ -128,9 +112,10 @@ class RRClass:
 
 
 # debug
-"""
+'''
 tmp = RRClass()
 cw = tmp.get_data_base()['CW']
 ht = tmp.get_data_base()['HT']
-print(cw)
-"""
+all_data = tmp.get_data_base_all()
+print(all_data)
+'''
