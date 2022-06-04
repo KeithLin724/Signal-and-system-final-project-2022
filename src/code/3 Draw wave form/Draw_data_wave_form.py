@@ -8,7 +8,7 @@ from file_data_class import FileDataClass  # import the File Date
 
 
 def get_ppi():  # get the dpi
-    LOGPIXELSX, LOGPIXELSY, user32 = (88, 90, ctypes.windll.user32)
+    LOGPIXELSX, user32 = (88, ctypes.windll.user32)
     user32.SetProcessDPIAware()
     dc = user32.GetDC(0)
     pix_per_inch = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
@@ -38,8 +38,8 @@ for name in names:
 
     dataPathClass.update({name: dicZipList})
 
-    locCheckDict.update({name: [os.path.join(locCheck, i) for i in listOfFileName]})
-
+    locCheckDict.update(
+        {name: [os.path.join(locCheck, i) for i in listOfFileName]})
 
 pprint(dataPathClass)
 pprint(locCheckDict)
@@ -61,7 +61,7 @@ for nameC, filePaths in locCheckDict.items():
 saveFolderName = os.path.join("src", "file Picture")
 if not os.path.exists(saveFolderName):
     os.mkdir(saveFolderName)
-    
+
 # open the dict
 for namePart, dataDict in dataPathClass.items():
 
