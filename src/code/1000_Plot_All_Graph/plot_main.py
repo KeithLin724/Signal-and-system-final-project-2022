@@ -31,10 +31,16 @@ if not os.path.exists(saveFolderCSVPath):
     os.mkdir(saveFolderCSVPath)
 
 for name, taDataDictList in dataBase.items():
+
     # NOTE: open folder for save (main source)
     saveFolderBranch = os.path.join(saveFolderPath, name)
     if not os.path.exists(saveFolderBranch):
         os.mkdir(saveFolderBranch)
+
+    # NOTE: open folder for save CSV (main source)
+    taSaveFileNameCsvFolder = os.path.join(saveFolderCSVPath, name)
+    if not os.path.exists(taSaveFileNameCsvFolder):
+        os.mkdir(taSaveFileNameCsvFolder)
 
     for dataFileType, fileList in taDataDictList.items():
         df = pd.DataFrame()
@@ -48,7 +54,7 @@ for name, taDataDictList in dataBase.items():
                     data=df,
                     dpi=Dpi)
         saveFileNameCsvPath = os.path.join(
-            saveFolderCSVPath, f'{name}_{dataFileType}_all_graph.csv')
+            taSaveFileNameCsvFolder, f'{name}_{dataFileType}_all_graph.csv')
         df.to_csv(saveFileNameCsvPath, index=False)
 
 print(dataBase)
