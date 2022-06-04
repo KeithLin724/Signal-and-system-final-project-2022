@@ -1,3 +1,4 @@
+# IMPORT:
 from PKG import FileCenter, get_ppi, save_to_png
 from RR_Class import RRClass
 from rich import print
@@ -10,6 +11,7 @@ mainSaveFolderPath = os.path.join(mainFolder, mainSaveFolder)
 if not os.path.exists(mainSaveFolderPath):
     os.mkdir(mainSaveFolderPath)
 
+# get the PC dpi for save picture
 Dpi = get_ppi()
 
 # data of main
@@ -57,7 +59,7 @@ rrDataBaseType = rrDataCenter.get_data_base_type()
 rrDataBase = rrDataCenter.get_data_base_all()
 rrSavePath = 'RR All Graph'  # NOTE: this is a save path for the rr data
 
-# NOTE: this is a save path for save the RR picture
+# NOTE: for save the RR picture
 saveRRSavePath = os.path.join(mainSaveFolderPath, rrSavePath)
 if not os.path.exists(saveRRSavePath):
     os.mkdir(saveRRSavePath)
