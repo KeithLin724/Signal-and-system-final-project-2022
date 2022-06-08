@@ -27,6 +27,8 @@ def Cal_HR(inputList: list) -> list:
 def save_to_png(folderPath: str,
                 titleStr: str,
                 data: pd.DataFrame,
+                xLabel: str = None,
+                yLabel: str = None,
                 dpi: int = 100) -> None:
     """_summary_
         Save DataFrame to png function
@@ -34,8 +36,11 @@ def save_to_png(folderPath: str,
         folderPath (str): about save picture folder path 
         titleStr (str): about the picture title 
         data (pd.DataFrame): about the data about the picture
+        xLabel (str, optional): set x Label Name Defaults to None.
+        yLabel (str, optional): set y Label Name Defaults to None.
         dpi (int, optional): about the picture quality Defaults to 100.
     """
+
     plt.clf()
 
     data.plot(legend=True)
@@ -44,8 +49,14 @@ def save_to_png(folderPath: str,
 
     # fileName = titleStr + '_diff.png'
     saveFilePath = os.path.join(folderPath, f"{titleStr}_diff.png")
-    plt.savefig(saveFilePath, dpi=dpi)
 
+    if xLabel is not None:
+        plt.xlabel(xLabel)
+
+    if yLabel is not None:
+        plt.ylabel(yLabel)
+
+    plt.savefig(saveFilePath, dpi=dpi)
     plt.clf()
     plt.close()
 
@@ -122,6 +133,8 @@ for name in names:
         # save the picture
         save_to_png(folderPath=nameSaveFolderPathBranch,
                     titleStr=state,
+                    xLabel='time (s)',
+                    yLabel='HR Value',
                     data=pdDf,
                     dpi=dpi)
 

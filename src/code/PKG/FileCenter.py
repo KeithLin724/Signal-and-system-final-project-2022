@@ -4,7 +4,7 @@ from pandas import DataFrame
 from copy import deepcopy
 from ctypes import windll
 from pprint import pformat
-from matplotlib.pyplot import savefig, clf, close, title
+from matplotlib.pyplot import savefig, clf, close, title, xlabel, ylabel
 
 
 def get_ppi():
@@ -21,37 +21,39 @@ def get_ppi():
 # dpi = get_ppi()
 
 
-def save_to_png(
-    folderPath: str,
-    titleStr: str,
-    data: DataFrame,
-    x_ticks: bool = False,
-    dpi: int = 100,
-) -> None:
+def save_to_png(folderPath: str,
+                titleStr: str,
+                data,
+                xLabel: str = None,
+                yLabel: str = None,
+                dpi: int = 100) -> None:
     """_summary_
         Save DataFrame to png function
     Args:
         folderPath (str): about save picture folder path 
         titleStr (str): about the picture title 
-        data (pd.DataFrame): about the data about the picture
-        x_ticks (bool, optional): is use the first columns to x axis
-        dpi (int, optional): about the dpi of the picture
+        data : about the data about the picture
+        xLabel (str, optional): set x Label Name Defaults to None.
+        yLabel (str, optional): set y Label Name Defaults to None.
+        dpi (int, optional): about the picture quality Defaults to 100.
     """
 
     clf()
 
-    if x_ticks:
-        data.set_index(data.columns.values[0]).plot(legend=True)
-    else:
-        data.plot(legend=True)
-
-    titleStr = titleStr.capitalize()
+    data.plot(legend=True)
+    # titleStr = titleStr.capitalize()
     title(titleStr)
 
     # fileName = titleStr + '_diff.png'
-    saveFilePath = path.join(folderPath, f"{titleStr}.png")
-    savefig(saveFilePath, dpi=dpi)
+    saveFilePath = path.join(folderPath, f"{titleStr}_diff.png")
 
+    if xLabel is not None:
+        xlabel(xLabel)
+
+    if yLabel is not None:
+        ylabel(yLabel)
+
+    savefig(saveFilePath, dpi=dpi)
     clf()
     close()
 

@@ -41,7 +41,7 @@ def save_to_png(folderPath: str,
         data.set_index(data.columns.values[0]).plot(legend=True)
     else:
         data.plot(legend=True)
-    titleStr = titleStr.capitalize()
+    # titleStr = titleStr.capitalize()
     plt.title(titleStr)
 
     #fileName = titleStr + '_diff.png'

@@ -4,14 +4,16 @@ import matplotlib.pyplot as plt
 
 
 class FileDataClass:
+
     def __init__(self, path: str) -> None:
         self.__fileName = os.path.basename(path)
         self.__fromFolder = os.path.split(path)
 
-        self.__fileData = pd.read_csv(path,
-                                      index_col=False,
-                                      # squeeze=True,
-                                      header=0).squeeze('columns')
+        self.__fileData = pd.read_csv(
+            path,
+            index_col=False,
+            # squeeze=True,
+            header=0).squeeze('columns')
         # print(self.__fileData)
 
         tmpHeader = [float(self.__fileData.name)]
@@ -22,7 +24,6 @@ class FileDataClass:
         tmpNameList = self.__fileName.replace('.csv', '')
         self.__fileData.name = tmpNameList.replace('_', ' ')
         tmpNameList = tmpNameList.split('_')
-
         '''
         self.__name = tmpNameList[0]
         self.__state = tmpNameList[1]
@@ -45,6 +46,9 @@ class FileDataClass:
         self.__fileData.plot(legend=True, label=self.__fileData.name)
         saveFileName = self.__fileData.name.replace(' ', '_') + '.png'
         saveFilePath = os.path.join(folderPath, saveFileName)
+        plt.xlabel('time (s)')
+        plt.ylabel(f'{self.__dataType} values')
+
         plt.savefig(saveFilePath, dpi=dpi)
 
         plt.clf()

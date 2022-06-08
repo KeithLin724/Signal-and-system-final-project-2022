@@ -1,7 +1,7 @@
 from os import path
 from os.path import basename
 from pandas import read_csv, Series
-from matplotlib.pyplot import savefig, clf, close
+from matplotlib.pyplot import savefig, clf, close, xlabel, ylabel
 
 
 class FileDataClass:
@@ -48,6 +48,8 @@ class FileDataClass:
         self.__fileData.plot(legend=True, label=self.__fileData.name)
         saveFileName = self.__fileData.name.replace(" ", "_") + ".png"
         saveFilePath = path.join(folderPath, saveFileName)
+        xlabel('time (s)')
+        ylabel(f'{self.__dataType} values')
 
         savefig(saveFilePath, dpi=dpi)
         clf()

@@ -51,8 +51,11 @@ for name, taDataDictList in dataBase.items():
 
         save_to_png(folderPath=saveFolderBranch,
                     titleStr=f'{name}_{dataFileType}_all_graph',
+                    xLabel='time (s)',
+                    yLabel=f'{dataFileType} values',
                     data=df,
                     dpi=Dpi)
+
         saveFileNameCsvPath = os.path.join(
             taSaveFileNameCsvFolder, f'{name}_{dataFileType}_all_graph.csv')
         df.to_csv(saveFileNameCsvPath, index=False)
@@ -75,6 +78,7 @@ if not os.path.exists(saveRRSaveCSVPath):
     os.mkdir(saveRRSaveCSVPath)
 
 for rrBaseType, varDataBase in rrDataBase.items():
+    x_label = 'time (s)' if rrBaseType == 'RR' else 'rate (bpm ^-1)'
 
     for name, dataStateAll in varDataBase.items():
         df = pd.DataFrame(dataStateAll)
@@ -82,6 +86,8 @@ for rrBaseType, varDataBase in rrDataBase.items():
         save_to_png(folderPath=saveRRSavePath,
                     titleStr=f'{rrBaseType}_{name}_RRI',
                     data=df,
+                    xLabel=x_label,
+                    yLabel='RRI Value',
                     dpi=Dpi)
         saveCSVPath = os.path.join(saveRRSaveCSVPath,
                                    f'{rrBaseType}_{name}_RRI.csv')
