@@ -1,6 +1,6 @@
 import os
 from RR_Class import RRClass
-from PJ_FFT_Algor import data_to_png, get_ppi
+from PJ_FFT_Algor import Frequency_response_and_Power_spectrum_To_png, get_ppi
 
 # open the folder
 rrDataCenter = RRClass()
@@ -22,7 +22,8 @@ for name, stateOfFile in rrDataBaseM2.items():
         os.mkdir(outputFolderNameBranch)
 
     for state, data in stateOfFile.items():
-        data_to_png(dataIn=data,
-                    dataOutPath=outputFolderNameBranch,
-                    dataFileName=f'{name}_{state}_FR_PS',
-                    dpi=Dpi)
+        Frequency_response_and_Power_spectrum_To_png(
+            dataIn=data,
+            dataOutPath=outputFolderNameBranch,
+            dataFileName=f'{name}_{state}_FR_PS',
+            dpi=Dpi)

@@ -21,7 +21,7 @@ def Frequency_response_and_Power_spectrum_To_png(dataIn,
                                                  dataFileName: str,
                                                  dpi: int = 100) -> None:
     """_summary_
-
+        
     Args:
         dataIn (_type_): about the data in (like a list)
         dataOutPath (str): about the file output path
