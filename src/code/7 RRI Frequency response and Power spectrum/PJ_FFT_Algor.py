@@ -20,6 +20,14 @@ def data_to_png(dataIn,
                 dataOutPath: str,
                 dataFileName: str,
                 dpi: int = 100) -> None:
+    """_summary_
+
+    Args:
+        dataIn (_type_): about the data in (like a list)
+        dataOutPath (str): about the file output path
+        dataFileName (str): about the picture file name 
+        dpi (int, optional): control the picture output quality. Defaults to 100.
+    """
     N, T = dataIn.size, 1.0 / 800.0  # f = 60 Hz
 
     # Create a signal

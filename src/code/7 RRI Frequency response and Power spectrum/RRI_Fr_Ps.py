@@ -1,20 +1,13 @@
 import os
 from RR_Class import RRClass
 from PJ_FFT_Algor import data_to_png, get_ppi
-# import control.matlab as ml
-# from rich import print
-
-# import scipy.fftpack
 
 # open the folder
 rrDataCenter = RRClass()
 # rrDataBase = rrDataCenter.get_data_base()
 rrDataBaseM2 = rrDataCenter.get_data_base_M2()
 Dpi = get_ppi()
-# taNames = rrDataCenter.get_ta_name()
-# typeFiles = rrDataCenter.get_state_menu()
 
-# testData = rrDataBaseM2['CW']['baseline']
 # output file folder name
 outputFolderName = os.path.join('src',
                                 'RRI Frequency response and Power spectrum')
