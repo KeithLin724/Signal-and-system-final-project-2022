@@ -5,6 +5,21 @@ import numpy as np
 from numpy.fft import fft, fftfreq
 
 
+class PowerSpectrum:
+
+    def __init__(self, dataIn) -> None:
+        self.__data = dataIn
+        self.__N = self.__data.size
+        self.__fr = np.linspace(0, 800.0 // 2, self.__N // 2)
+        self.__fftData = fft(self.__data)
+        xFTmp = self.__fftData[0:self.__N // 2]
+        self.__powerSpectrum = abs(xFTmp)**2
+
+    def total_power(self):
+
+        return 10 * np.log10(sum(list(self.__powerSpectrum)))
+
+
 def get_ppi():
     '''get the dpi function'''
     LOGPIXELSX, user32 = (88, ctypes.windll.user32)
