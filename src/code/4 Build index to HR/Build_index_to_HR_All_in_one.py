@@ -74,20 +74,15 @@ for name in names:
             "origin HR": pd.Series(hrOri),
             "index to HR": pd.Series(indexToHR)
         })
-        # print(dictTmp)
+
         dataSaveDic.append((state, dictTmp))
 
-    # print(len(dataSaveDic))
-
-    # print(dataSaveDic)
-
+    # create save folder
     nameSaveFolderPath = os.path.join(saveFolderPath, name)
-
     if not os.path.exists(nameSaveFolderPath):
         os.mkdir(nameSaveFolderPath)
 
     #make all in one
-    # plt.clf()
     plt.figure(figsize=(16, 12))
     colNumber = 2 if len(dataSaveDic) <= 6 else 3
 
@@ -112,5 +107,3 @@ for name in names:
                             f'{name}_Index_HR_DIFF_AIO.png')
     plt.tight_layout()
     plt.savefig(savePath, dpi=dpi)
-
-    # print(index, state, pdDf)

@@ -74,6 +74,8 @@ for name in taNames:
     },
                       index=indexName)
     print(df)
+
+    # save path
     fileSavePath = os.path.join(saveFolderPath,
                                 f'{name}_power_spectrum_SV_RRT.csv')
     df.to_csv(fileSavePath)

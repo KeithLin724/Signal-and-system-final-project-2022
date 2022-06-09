@@ -4,8 +4,6 @@ import os  # read file in lib
 import ctypes
 from file_data_class import FileDataClass  # import the File Date
 
-# write by my self
-
 
 def get_ppi():  # get the dpi
     LOGPIXELSX, user32 = (88, ctypes.windll.user32)
