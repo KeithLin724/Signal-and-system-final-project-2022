@@ -1,7 +1,6 @@
 import os
-import pandas as pd
-from rich import print
-import numpy as np
+# import pandas as pd
+from pandas import read_csv, Series
 
 
 class RRClass:
@@ -57,13 +56,13 @@ class RRClass:
             for listOfFileName, tmpTaData, tmpPath, takeName in usingFor:
                 tmpTaDict = dict()
                 for objFile in listOfFileName:
-                    dataRead = pd.read_csv(os.path.join(tmpPath, objFile),
-                                           index_col=False,
-                                           header=0).squeeze("columns")
+                    dataRead = read_csv(os.path.join(tmpPath, objFile),
+                                        index_col=False,
+                                        header=0).squeeze("columns")
                     # get header data
                     tmpHeader = [float(dataRead.name)]
                     tmpHeader[1:] = dataRead
-                    dataRead = pd.Series(tmpHeader)
+                    dataRead = Series(tmpHeader)
 
                     # get state
                     fileState = objFile.replace('.csv',
@@ -103,16 +102,6 @@ class RRClass:
         '''get the data base type (RR or RRM2)'''
         return self.__dataBaseType
 
-    def get_data_base_all(self) -> dict:
+    def get_data_base_all(self) -> dict():
         '''get the data base (Data Base type--> Name --> State --> Data)'''
         return self.__dataBaseAll
-
-
-# debug
-'''
-tmp = RRClass()
-cw = tmp.get_data_base()['CW']
-ht = tmp.get_data_base()['HT']
-all_data = tmp.get_data_base_all()
-print(all_data)
-'''

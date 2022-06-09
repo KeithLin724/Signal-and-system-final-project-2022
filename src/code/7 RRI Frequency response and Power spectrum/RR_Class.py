@@ -1,44 +1,6 @@
 import os
-from matplotlib import pyplot as plt
-import pandas as pd
-from rich import print
-import numpy as np
-from numpy.fft import fft, fftfreq
-
-
-def fft_and_phase(dataList: pd.Series, savePath: str) -> None:
-    data = list(dataList)
-    N, T = dataList.size, 1.0 / 800.0
-
-    # Create a signal
-    x = np.linspace(0.0, N * T, N)
-    # t0 = np.pi / 6  # non-zero phase of the second sine
-    y = data  # np.sin(50.0 * 2.0 * np.pi * x) + 0.5 * np.sin(200.0 * 2.0 * np.pi * x + t0)
-    yf = fft(y)  # to normalize use norm='ortho' as an additional argument
-
-    # Where is a 200 Hz frequency in the results?
-    freq = fftfreq(x.size, d=T)
-    index, = np.where(np.isclose(freq, 200, atol=1 / (T * N)))
-
-    # Get magnitude and phase
-    magnitude = np.abs(yf[index[0]])
-    phase = np.angle(yf[index[0]])
-    print("Magnitude:", magnitude, ", phase:", phase)
-
-    # Plot a spectrum
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3)
-    ax1.plot(freq[0:N // 2], 2 / N * np.abs(yf[0:N // 2]))
-    ax1.set_title('amplitude spectrum')
-
-    ax2.plot(freq[0:N // 2], np.angle(yf[0:N // 2]))
-    ax2.set_title('phase spectrum')
-
-    xF = yf[0:N // 2]
-    fr = np.linspace(0, 800 // 2, N // 2)
-    ax3.plot(fr, abs(xF)**2)
-    ax3.set_title('Power spectrum')
-    # plt.psd()
-    plt.show()
+# import pandas as pd
+from pandas import read_csv, Series
 
 
 class RRClass:
@@ -94,13 +56,13 @@ class RRClass:
             for listOfFileName, tmpTaData, tmpPath, takeName in usingFor:
                 tmpTaDict = dict()
                 for objFile in listOfFileName:
-                    dataRead = pd.read_csv(os.path.join(tmpPath, objFile),
-                                           index_col=False,
-                                           header=0).squeeze("columns")
+                    dataRead = read_csv(os.path.join(tmpPath, objFile),
+                                        index_col=False,
+                                        header=0).squeeze("columns")
                     # get header data
                     tmpHeader = [float(dataRead.name)]
                     tmpHeader[1:] = dataRead
-                    dataRead = pd.Series(tmpHeader)
+                    dataRead = Series(tmpHeader)
 
                     # get state
                     fileState = objFile.replace('.csv',
@@ -143,13 +105,3 @@ class RRClass:
     def get_data_base_all(self) -> dict():
         '''get the data base (Data Base type--> Name --> State --> Data)'''
         return self.__dataBaseAll
-
-
-# debug
-'''
-tmp = RRClass()
-cw = tmp.get_data_base()['CW']
-ht = tmp.get_data_base()['HT']
-all_data = tmp.get_data_base_all()
-print(all_data)
-'''
