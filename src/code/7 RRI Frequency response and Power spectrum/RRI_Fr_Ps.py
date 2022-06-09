@@ -5,9 +5,7 @@ import pandas as pd
 
 # open the folder
 rrDataCenter = RRClass()
-# rrDataBase = rrDataCenter.get_data_base()
-rrDataBaseM2 = rrDataCenter.get_data_base_M2()
-Dpi = get_ppi()
+rrDataBaseM2, Dpi = rrDataCenter.get_data_base_M2(), get_ppi()
 
 # output file folder name
 outputFolderName = os.path.join('src',
@@ -15,8 +13,7 @@ outputFolderName = os.path.join('src',
 if not os.path.exists(outputFolderName):
     os.mkdir(outputFolderName)
 
-dataSave = dict()
-stateList = []
+dataSave, stateList = dict(), []
 
 for name, stateOfFile in rrDataBaseM2.items():
 
@@ -34,14 +31,18 @@ for name, stateOfFile in rrDataBaseM2.items():
             dataFileName=f'{name}_{state}_FR_PS',
             dpi=Dpi)
 
+        # add the state
         if state not in stateList:
             stateList.append(state)
+
+        # cal the total power
         pw = PowerSpectrum(data)
         taTotalPowerList.append(pw.total_power())
 
     # end of the loop
     dataSave.update({name: taTotalPowerList})
 
+# save the total power data to the output csv file
 dataSave['CW'].append(-1)
 df = pd.DataFrame(dataSave, index=stateList)
 savePath = os.path.join(outputFolderName, 'Total Power (RRI)(Unit dB).csv')

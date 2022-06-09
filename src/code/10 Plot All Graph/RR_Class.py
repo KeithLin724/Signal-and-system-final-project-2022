@@ -4,11 +4,6 @@ from rich import print
 import numpy as np
 
 
-def fft_and_phase(dataList: pd.Series, savePath: str) -> None:
-    N, T = dataList.size, 1.0 / 25000.0
-    x, y = np.linspace(0.0, N * T, N), dataList.values
-
-
 class RRClass:
     """_summary_
     

@@ -23,4 +23,6 @@ https://cloud.tencent.com/developer/article/1411006
 
 https://www.delftstack.com/zh-tw/howto/python/python-list-comprehension-if-else/
 
+https://broadbandlibrary.com/total-power-and-power-spectral-density/
+
 
