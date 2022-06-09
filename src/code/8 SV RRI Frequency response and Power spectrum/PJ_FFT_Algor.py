@@ -50,7 +50,7 @@ def Frequency_response_and_Power_spectrum_To_png(dataIn,
     yf = fft(y)
 
     # Where is a 200 Hz frequency in the results?
-    freq = fftfreq(x.size, d=T)
+    freq = np.linspace(0.0, 1.0, N)  # fftfreq(x.size, d=T)
     # Plot a spectrum
     plt.figure(figsize=(16, 12))
 
@@ -81,7 +81,7 @@ def Frequency_response_and_Power_spectrum_To_png(dataIn,
     # Power spectrum
     plt.subplot(2, 2, 4)
     xF = yf[0:N // 2]
-    fr = np.linspace(0, 800 // 2, N // 2)
+    fr = np.linspace(0, 0.5, num=len(xF))
     plt.semilogy(fr, abs(xF)**2)
     plt.title('Power spectrum')
     plt.xlabel('Frequency (Hz)')

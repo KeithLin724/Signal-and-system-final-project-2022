@@ -1,6 +1,7 @@
 # %%
 import os
 from pprint import pprint
+import numpy as np
 import pandas as pd
 from PKG import FileCenter, get_ppi
 from rich import print
@@ -21,43 +22,6 @@ def Cal_HR(inputList: list) -> list:
         tranHRPart := 60.0 * 200.0 / (inputList[index + 1] - val)
         for index, val in enumerate(inputList) if index + 1 < inputListSize
     ]
-
-
-def save_to_png(folderPath: str,
-                titleStr: str,
-                data: pd.DataFrame,
-                xLabel: str = None,
-                yLabel: str = None,
-                dpi: int = 100) -> None:
-    """_summary_
-        Save DataFrame to png function
-    Args:
-        folderPath (str): about save picture folder path 
-        titleStr (str): about the picture title 
-        data (pd.DataFrame): about the data about the picture
-        xLabel (str, optional): set x Label Name Defaults to None.
-        yLabel (str, optional): set y Label Name Defaults to None.
-        dpi (int, optional): about the picture quality Defaults to 100.
-    """
-
-    plt.clf()
-
-    data.plot(legend=True)
-    titleStr = titleStr.capitalize()
-    plt.title(titleStr)
-
-    # fileName = titleStr + '_diff.png'
-    saveFilePath = os.path.join(folderPath, f"{titleStr}_diff.png")
-
-    if xLabel is not None:
-        plt.xlabel(xLabel)
-
-    if yLabel is not None:
-        plt.ylabel(yLabel)
-
-    plt.savefig(saveFilePath, dpi=dpi)
-    plt.clf()
-    plt.close()
 
 
 # input file center
@@ -102,7 +66,8 @@ for name in names:
     packIndexToHRAndOri = tuple(
         zip(hrFileListDataStateList, hrFileListData, indexFileListDataToHR))
 
-    dataSaveDic = dict()
+    # dataSaveDic = dict()
+    dataSaveDic = []
     for state, hrOri, indexToHR in packIndexToHRAndOri:
 
         dictTmp = pd.DataFrame({
@@ -110,35 +75,42 @@ for name in names:
             "index to HR": pd.Series(indexToHR)
         })
         # print(dictTmp)
-        dataSaveDic.update({state: dictTmp})
+        dataSaveDic.append((state, dictTmp))
 
-    print(len(dataSaveDic))
+    # print(len(dataSaveDic))
 
-    print(dataSaveDic)
+    # print(dataSaveDic)
 
     nameSaveFolderPath = os.path.join(saveFolderPath, name)
 
     if not os.path.exists(nameSaveFolderPath):
         os.mkdir(nameSaveFolderPath)
 
-    for state, pdDf in dataSaveDic.items():
-        nameSaveFolderPathBranch = os.path.join(nameSaveFolderPath, state)
+    #make all in one
+    # plt.clf()
+    plt.figure(figsize=(16, 12))
+    colNumber = 2 if len(dataSaveDic) <= 6 else 3
 
-        if not os.path.exists(nameSaveFolderPathBranch):  # make the folder
-            os.mkdir(nameSaveFolderPathBranch)
+    for index, val in enumerate(dataSaveDic):
+        state, pdDf = val
+        y, x = index // 3, index % 3
+        colName = list(pdDf.columns)
 
-        # save the picture
-        save_to_png(folderPath=nameSaveFolderPathBranch,
-                    titleStr=state,
-                    xLabel='time (s)',
-                    yLabel='HR Value',
-                    data=pdDf,
-                    dpi=dpi)
+        xScale = np.linspace(0, len(pdDf[colName[0]].tolist()),
+                             len(pdDf[colName[0]].tolist()))
+        plt.subplot(colNumber, 3, index + 1)
+        plt.plot(xScale, pdDf[colName[0]].tolist(), label=colName[0])
+        plt.plot(xScale, pdDf[colName[1]].tolist(), label=colName[1])
 
-        # save to CSV file
-        fileNamePath = os.path.join(nameSaveFolderPathBranch,
-                                    f"{state.capitalize()}_diff.csv")
+        plt.title(state)
+        plt.xlabel('time (s)')
+        plt.ylabel('HR Value')
+        plt.grid()
+        plt.legend()
 
-        pdDf.to_csv(fileNamePath, index=False)
+    savePath = os.path.join(nameSaveFolderPath,
+                            f'{name}_Index_HR_DIFF_AIO.png')
+    plt.tight_layout()
+    plt.savefig(savePath, dpi=dpi)
 
-# %%
+    # print(index, state, pdDf)

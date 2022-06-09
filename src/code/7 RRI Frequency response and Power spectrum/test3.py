@@ -1,7 +1,7 @@
 import ctypes
 from matplotlib import pyplot as plt
 import numpy as np
-from numpy.fft import fft, fftfreq
+from numpy.fft import fft  # , fftfreq
 from RR_Class import RRClass
 
 
@@ -36,13 +36,13 @@ yf = fft(y)  # to normalize use norm='ortho' as an additional argument
 print('length of yf = ', len(yf))
 
 # Where is a 200 Hz frequency in the results?
-freq = fftfreq(x.size, d=T)
-index, = np.where(np.isclose(freq, 200, atol=1 / (T * N)))
-print(f'length of frequency[N/2] = {len(freq[0:N // 2])}')
+freq = np.linspace(0.0, 0.5, N // 2)  # fftfreq(x.size, d=T)
+# index, = np.where(np.isclose(freq, 200, atol=1 / (T * N)))
+# print(f'length of frequency[N/2] = {len(freq[0:N // 2])}')
 # Get magnitude and phase
-magnitude = np.abs(yf[index[0]])
-phase = np.angle(yf[index[0]])
-print("Magnitude:", magnitude, ", phase:", phase)
+# magnitude = np.abs(yf[index[0]])
+# phase = np.angle(yf[index[0]])
+# print("Magnitude:", magnitude, ", phase:", phase)
 
 # Plot a spectrum
 plt.figure(figsize=(16, 12))
@@ -61,7 +61,7 @@ xMag = np.abs(yf[0:N // 2]) / N
 xMagPlot = 2 * xMag[0:int(N / 2 + 1)]
 xMagPlot[0] = xMagPlot[0] / 2
 plt.subplot(2, 2, 2)
-plt.semilogy(freq[0:N // 2], xMagPlot)
+plt.semilogy(freq, xMagPlot)
 # plt.semilogy(freq[0:N // 2], 2 / N * np.abs(yf[0:N // 2]))
 plt.title('Amplitude spectrum')
 plt.xlabel('Frequency (Hz)')
@@ -70,7 +70,7 @@ plt.grid()
 
 # Phase spectrum
 plt.subplot(2, 2, 3)
-plt.plot(freq[0:N // 2], np.angle(yf[0:N // 2]))
+plt.plot(freq, np.angle(yf[0:N // 2]))
 # plt.semilogy(freq[0:N // 2], np.angle(yf[0:N // 2]))
 plt.title('Phase spectrum')
 plt.xlabel('Frequency (Hz)')
