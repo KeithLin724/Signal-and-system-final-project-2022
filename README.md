@@ -1,3 +1,7 @@
-# This is a Signal-and-system-final-project-2022
+# Signal and system Final Project 2022
+#### Written by KYLiN and MP Liew
 
-## master project
+---
+
+## Master
+We are using `Python` and `LabView` to develop the final project 
