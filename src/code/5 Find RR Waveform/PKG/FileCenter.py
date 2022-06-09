@@ -9,9 +9,7 @@ from matplotlib import pyplot as plt
 
 def get_ppi():
     '''get the dpi function'''
-    LOGPIXELSX, LOGPIXELSY, user32 = (88,
-                                      90,
-                                      ctypes.windll.user32)
+    LOGPIXELSX, LOGPIXELSY, user32 = (88, 90, ctypes.windll.user32)
 
     user32.SetProcessDPIAware()
     dc = user32.GetDC(0)
@@ -19,10 +17,16 @@ def get_ppi():
     user32.ReleaseDC(0, dc)
     return pix_per_inch
 
+
 #dpi = get_ppi()
 
 
-def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, x_ticks: bool = False, dpi: int = 100) -> None:
+def save_to_png(folderPath: str,
+                titleStr: str,
+                data,
+                labelName: str = '',
+                x_ticks: bool = False,
+                dpi: int = 100) -> None:
     """_summary_
         Save DataFrame to png function
     Args:
@@ -34,10 +38,11 @@ def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, x_ticks: boo
     """
 
     plt.clf()
+    labelName = 'None' if labelName is '' else labelName
     if x_ticks:
         data.set_index(data.columns.values[0]).plot(legend=True)
     else:
-        data.plot(legend=True)
+        data.plot(legend=True, label=labelName)
     titleStr = titleStr.capitalize()
     plt.title(titleStr)
 
@@ -50,6 +55,7 @@ def save_to_png(folderPath: str, titleStr: str, data: pd.DataFrame, x_ticks: boo
 
 
 class FileCenter:
+
     def __init__(self) -> None:
         self.__pathLoc = 'src\FilterOutput'
 
@@ -62,9 +68,7 @@ class FileCenter:
         #self.__dpi = get_ppi()
 
         for name in self.__names:
-            locCheck = path.join(self.__pathLoc,
-                                 name,
-                                 self.__filePathType)
+            locCheck = path.join(self.__pathLoc, name, self.__filePathType)
             #listOfFileName = None
 
             if not path.exists(locCheck) and not path.isdir(locCheck):
@@ -79,8 +83,8 @@ class FileCenter:
 
             self.__dataBasie.update({name: dicZipList})
 
-            self.__locCheckDict.update({name:
-                                        [path.join(locCheck, i) for i in listOfFileName]})
+            self.__locCheckDict.update(
+                {name: [path.join(locCheck, i) for i in listOfFileName]})
 
         for _, filePaths in self.__locCheckDict.items():
             for filePath in filePaths:
@@ -88,8 +92,9 @@ class FileCenter:
 
                 try:
                     with open(filePath, mode='r') as f:
-                        simplePath = [i.replace('\n', '')
-                                      for i in list(f.readlines())]
+                        simplePath = [
+                            i.replace('\n', '') for i in list(f.readlines())
+                        ]
                 except Exception as e:
                     print(e)
                     exit()

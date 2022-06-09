@@ -1,14 +1,17 @@
 from copy import deepcopy
-from PKG import *
+from PKG import FileCenter, get_ppi
+
 import os
 
+# TODO: open data
 fileCenter = FileCenter()
 
-dataType = fileCenter.get_file_type()
-dataBase = fileCenter.get_data_basie()
-dataName = fileCenter.get_data_name()  # TODO: get ta name
-dpi = get_ppi()
-#dataLoc = fileCenter.get_data_item_loc()
+# TODO: get ta name
+dataType, dataBase, dataName, dpi = (fileCenter.get_file_type(),
+                                     fileCenter.get_data_basie(),
+                                     fileCenter.get_data_name(),
+                                     get_ppi())
+
 
 dataTaList = (dataBase[dataName[0]]['SV'], dataBase[dataName[1]]['SV'])
 taDataDict = dict(zip(dataName, deepcopy(dataTaList)))
@@ -20,6 +23,7 @@ saveMainFolder = os.path.join(mainFolder, saveFolder)
 if not os.path.exists(saveMainFolder):
     os.mkdir(saveMainFolder)
 
+# TODO: Save file
 for name, varData in taDataDict.items():
     saveTaBranchPath = os.path.join(saveMainFolder, name)
 
@@ -29,7 +33,3 @@ for name, varData in taDataDict.items():
     for svFileObj in varData:
         svFileObj.save_to_png(folderPath=saveTaBranchPath,
                               dpi=dpi)
-    # test
-# print(taDataDict)
-
-# print()

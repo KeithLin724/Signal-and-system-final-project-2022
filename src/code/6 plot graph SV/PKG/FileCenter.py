@@ -1,26 +1,62 @@
-from copy import deepcopy
-import ctypes
-from pprint import pformat
 from .file_data_class import FileDataClass
 from os import path, listdir
+from pandas import DataFrame
+from copy import deepcopy
+from ctypes import windll
+from pprint import pformat
+from matplotlib.pyplot import savefig, clf, close, title
 
 
 def get_ppi():
     '''get the dpi function'''
     LOGPIXELSX, LOGPIXELSY, user32 = (88,
                                       90,
-                                      ctypes.windll.user32)
+                                      windll.user32)
 
     user32.SetProcessDPIAware()
     dc = user32.GetDC(0)
-    pix_per_inch = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
+    pix_per_inch = windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
     user32.ReleaseDC(0, dc)
     return pix_per_inch
 
 #dpi = get_ppi()
 
 
+def save_to_png(folderPath: str, titleStr: str, data: DataFrame, x_ticks: bool = False, dpi: int = 100) -> None:
+    """_summary_
+        Save DataFrame to png function
+    Args:
+        folderPath (str): about save picture folder path 
+        titleStr (str): about the picture title 
+        data (pd.DataFrame): about the data about the picture
+        x_ticks (bool, optional): is use the first columns to x axis
+        dpi (int, optional): about the dpi of the picture
+    """
+
+    clf()
+    if x_ticks:
+        data.set_index(data.columns.values[0]).plot(legend=True)
+    else:
+        data.plot(legend=True)
+    titleStr = titleStr.capitalize()
+    title(titleStr)
+
+    #fileName = titleStr + '_diff.png'
+    saveFilePath = path.join(folderPath, f'{titleStr}.png')
+    savefig(saveFilePath, dpi=dpi)
+
+    clf()
+    close()
+
+
 class FileCenter:
+    """_summary_
+
+        This is a class for control the file 
+
+        Base on the class of FileDataClass 
+    """
+
     def __init__(self) -> None:
         self.__pathLoc = 'src\FilterOutput'
 
@@ -30,13 +66,11 @@ class FileCenter:
         self.__fileType = []
         emptyList = [[], [], []]
         self.__locCheckDict = dict()
-        #self.__dpi = get_ppi()
 
         for name in self.__names:
             locCheck = path.join(self.__pathLoc,
                                  name,
                                  self.__filePathType)
-            #listOfFileName = None
 
             if not path.exists(locCheck) and not path.isdir(locCheck):
                 exit()
@@ -55,12 +89,11 @@ class FileCenter:
 
         for _, filePaths in self.__locCheckDict.items():
             for filePath in filePaths:
-                #simplePath = []
-
                 try:
                     with open(filePath, mode='r') as f:
                         simplePath = [i.replace('\n', '')
                                       for i in list(f.readlines())]
+
                 except Exception as e:
                     print(e)
                     exit()
@@ -77,6 +110,7 @@ class FileCenter:
         return pformat(self.__dataBasie)
 
     def get_data_basie(self) -> dict:
+        '''get data base name->FileType->state'''
         return self.__dataBasie
 
     def get_data_name(self) -> tuple:

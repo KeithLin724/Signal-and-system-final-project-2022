@@ -1,7 +1,7 @@
 '''
 Title:Get folder name
 Written By KYLiN
-This is a get folder name code,output is a file path in .txt file 
+This is a get folder name code,output is a file path in .txt file
 Date: 18/5/2022
 '''
 
@@ -9,8 +9,7 @@ from pprint import pprint
 import os
 
 folderTree = ['CW', 'HT']
-dataFolder = 'src\data'
-
+dataFolder = 'src\\data'
 
 folderFileName = dict()
 for nameFolder in folderTree:
@@ -41,17 +40,15 @@ for key, listOfFileName in folderFileName.items():
     with open(fileNameTmp, mode='w') as f:
         f.write('\n'.join(listOfFileName))
 
-
 # make a abs file path in file
 PathOfFolderPath = os.path.join(tmpSaveFolder, 'name absfolder')
 if not os.path.exists(PathOfFolderPath):
     os.mkdir(PathOfFolderPath)
 
-
 listSaveAbsPath = dict()
 for nameFolder in folderTree:
-    for root, directories, files in os.walk(os.path.join(os.path.abspath(dataFolder),
-                                                         nameFolder)):
+    for root, directories, files in os.walk(
+            os.path.join(os.path.abspath(dataFolder), nameFolder)):
 
         tmp = [os.path.join(root, name) for name in files]
         listSaveAbsPath.update({nameFolder: tmp})
@@ -59,9 +56,8 @@ for nameFolder in folderTree:
 pprint(listSaveAbsPath)
 for key, listOfFilePath in listSaveAbsPath.items():
 
-    fileNameTmp = os.path.join(PathOfFolderPath, ''.join([key,
-                                                          'Folder abs Path',
-                                                          '.txt']))
+    fileNameTmp = os.path.join(PathOfFolderPath,
+                               ''.join([key, 'Folder abs Path', '.txt']))
 
     with open(fileNameTmp, mode='w') as f:
         f.write('\n'.join(listOfFilePath))
