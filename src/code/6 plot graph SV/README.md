@@ -4,3 +4,5 @@
 ---
 
 This is a code for generate the SV graph 
+
+Output Folder: `SV graphs`

@@ -7,6 +7,12 @@ This is a code for made index to HR , and compare with original HR
 
 And draw the the output 
 
+Output Folder : 
+
+| Only picture                            | Picture with picture            |
+| --------------------------------------- | ------------------------------- |
+| `index to HR with HR File Diff Picture` | `index to HR with HR File Diff` |
+
 ----
 
 # CW 
