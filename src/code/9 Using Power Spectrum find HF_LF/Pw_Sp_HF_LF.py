@@ -35,7 +35,7 @@ def power_spectrum_to_variance(dataIn: list) -> float:
 
     hfVariances, lfVariances = np.var(hfDataList), np.var(lfDataList)
 
-    return hfVariances / lfVariances
+    return lfVariances / hfVariances
 
 
 # open two data

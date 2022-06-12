@@ -3,7 +3,7 @@
 
 ---
 
-This is a code for using SV and RRI Power Spectrum for find $\frac{HF}{LF}$
+This is a code for using SV and RRI Power Spectrum for find $\frac{LF}{HF}$
 
 using `PKG`, `RR_Class`
 
