@@ -102,6 +102,6 @@ class RRClass:
         '''get the data base type (RR or RRM2)'''
         return self.__dataBaseType
 
-    def get_data_base_all(self) -> dict():
+    def get_data_base_all(self) -> dict:
         '''get the data base (Data Base type--> Name --> State --> Data)'''
         return self.__dataBaseAll
